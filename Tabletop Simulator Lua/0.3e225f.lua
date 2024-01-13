@@ -1,0 +1,66 @@
+--Static
+ZONE_NAME = "DISCARD_ZONE_GUID"
+PRINT_NAME = "Discard Pile"
+
+--Variable
+loadDone = false
+waitId = nil
+
+function onLoad()
+	loadDone = true
+end
+
+function onCollisionEnter(info)
+	if loadDone then
+		Global.call("createPolicyCardWait")
+		countCards(false)
+	end
+end
+
+function onCollisionExit(info)
+	if loadDone then
+		Global.call("createPolicyCardWait")
+		countCards(false)
+	end
+end
+
+function secondCheck()
+	countCards(true)
+end
+
+function countCards(secondCheck)
+	local deck = nil
+	local deck_ct = 0
+	local card_ct = 0
+	local zone = getObjectFromGUID(Global.getVar(ZONE_NAME))
+	local object
+
+	if zone then
+		local inZone = zone.getObjects()
+		for _, object in ipairs(inZone) do
+			if object.tag == "Card" then
+				card_ct = card_ct + 1
+			elseif object.tag == "Deck" then
+				deck = object
+				deck_ct = deck_ct + 1
+			end
+		end
+	end
+	if deck_ct == 0 and card_ct == 0 then
+		self.setName(0)
+	elseif deck_ct == 0 and card_ct == 1 then
+		self.setName(1)
+	elseif deck_ct == 1 and card_ct == 0 then
+		self.setName(#deck.getObjects())
+	else
+		self.setName("Unknown")
+		if secondCheck then
+			broadcastToAll("WARNING: " .. PRINT_NAME .. " is not a single deck.", {1, 0, 0})
+		else
+			if waitId then
+				Wait.stop(waitId)
+			end
+			waitId = Wait.time(function() countCards(true) end, 3)
+		end
+	end
+end
