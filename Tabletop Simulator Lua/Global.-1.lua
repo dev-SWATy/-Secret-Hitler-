@@ -78,6 +78,12 @@ notecardDesc[76561198059796308] = "1. Liberals may not play fascist as a choice\
 									"4. First person to sit gets to play\n" ..
 									"5. I (or a promoted player) get the final say on whether there's a conflict line on a play\n"
 
+--Skwat Notecard
+notecardName[76561197997616995] = "SWAT' Rules"
+notecardDesc[76561197997616995] = "1. Tyler is synonymous with the AI in our game, and vice versa. Remember, Tyler = AI, and AI = Tyler.\n" ..
+                                  "2. Once a Chancellor selection is made, it cannot be changed. The only exceptions to this rule are if a new player is involved or if a decision is made by SWAT.\n" ..
+                                  "3. If you are currently serving as the President or the Chancellor in the game, please refrain from discussing gameplay strategies or moves.\n"
+
 
 
 function onObjectSpawn(object)
@@ -1692,8 +1698,8 @@ function getOwnDraws(player)
 		end
         printString = printString.."\n"
 	end
-    printToColor(printString, player.color)
-
+  
+  printToColor(printString, player.color)
 
 end
 
@@ -2664,11 +2670,10 @@ function onChat(messageIn, player)
 			player:print('[FF0000]ERROR: Game not started.[-]')
 		end
 		return false
-    elseif messageTable[1] == '!tylertest' then
-		print(#drawLog)
+  elseif messageTable[1] == '!tylertest' then
 		--Nothing
 		return false
-    elseif messageTable[1] == 'getmydraws' or messageTable[1] == 'myd' then
+  elseif (messageTable[1] == 'getmydraws' or messageTable[1] == 'myd') and player.color ~= "Grey" then
 		getOwnDraws(player)
 		--Nothing
 		return false
@@ -5416,18 +5421,16 @@ end
 
 function addGetDraws(drawnCards, passedCards)
 
-	local drawLogArr = {}
-	table.insert(drawLogArr, getPres())
-	table.insert(drawLogArr, getChan())
-		for i, obj in ipairs(drawnCards) do
-		tmpCard = getObjectFromGUID(obj)
-		table.insert(drawLogArr, shortenDesc(tmpCard.getDescription()))
-	end
+--[[ 	local drawLogArr = {}
+	for i = 1, 5 do
+		table.insert(drawLogArr, drawLog[#drawLog][i])
+	end --]]
+
 	for i, obj in pairs(passedCards) do
-		table.insert(drawLogArr, shortenDesc(obj.getDescription()))
+		table.insert(drawLog[#drawLog], shortenDesc(obj.getDescription()))
 	end
-	table.remove(drawLog,#drawLog)
-	table.insert(drawLog,drawLogArr)
+--[[ 	table.remove(drawLog,#drawLog)
+	table.insert(drawLog,drawLogArr) --]]
 
 end
 
@@ -5442,19 +5445,16 @@ function discardButtonClicked(clickedObject, playerColor)
             printToColor("IDIOT: You already discarded.", playerColor, "Red")
         else
             if countHand(playerColor, true) == 3 then
-                for i, obj in ipairs(cardsLastDrawn) do
-                    tmpCard = getObjectFromGUID(obj)
-
-
-
-                    if tmpCard == clickedObject then
-                        tmpCard.clearButtons()
-                        discardCard(tmpCard)
-                    else
-                        tmpCard.deal(1, getChan())
-                        cardsPassed[i] = tmpCard
-                    end
-                end
+				for i, obj in ipairs(cardsLastDrawn) do
+					tmpCard = getObjectFromGUID(obj)
+					if tmpCard == clickedObject then
+						tmpCard.clearButtons()
+						discardCard(tmpCard)
+					else
+						tmpCard.deal(1, getChan())
+						cardsPassed[i] = tmpCard
+					end
+				end
 				
 				addGetDraws(cardsLastDrawn, cardsPassed)
 
@@ -6696,27 +6696,22 @@ end
 
 function giveRoleCardsCo()
     local curGUIDS = {}
-
     if bolRoles then 
         curGUIDS = HAND_ZONE_GUIDSc
     else
         curGUIDS = ROLE_ZONE_GUIDS
     end
-
 	local spawnParams = {
 		type = "Deck",
 		sound = false,
 		scale = {1.51, 1, 1.51}
 	}
-
 	local newVoteDeck = spawnObject(spawnParams)
 	wait(5)
 	newVoteDeck.setCustomObject(roleInfo)
 	wait(5)
-
 	local libCards = {}
 	local fasCards = {}
-
 	for i = 1, 9 do
 		if (i < 7) then
 			table.insert(libCards, newVoteDeck.takeObject())
@@ -6725,8 +6720,6 @@ function giveRoleCardsCo()
 		end
 	end
 	local hitCard = newVoteDeck.takeObject({position=newPosition})
-
-
 	if not options.dealRoleCards then
 		local colours = {"White","Brown","Red","Orange","Yellow","Green","Teal","Blue","Purple","Pink"}
 
