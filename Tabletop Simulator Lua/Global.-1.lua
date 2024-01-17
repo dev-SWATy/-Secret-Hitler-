@@ -1703,6 +1703,16 @@ function getOwnDraws(player)
 
 end
 
+function VoteHistoryUI(player)
+
+	if options.voteHistory then
+		player:print(string.gsub(voteNotebook, '\n$', ''))
+	else
+		player:print('[FF0000]ERROR: Full vote history is not enabled.[-]')
+	end
+
+end
+
 function printDraws(player, messageTable) -- left on top
 	local publicPrint = true
     local printString = ""

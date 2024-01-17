@@ -139,8 +139,10 @@
 	<Button class="tp50" onClick="tellRoleButtonUIB">Role?</Button>
 </HorizontalLayout>
 
-<HorizontalLayout padding="0 110 0 0" height="4%" width="11%" rectAlignment="LowerRight" visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink|Black">
-	<Button class="tp50" onClick="tellRoleButtonUIB">Role?</Button>
+<HorizontalLayout padding="0 0 -100 0" height="4%" width="10%" rectAlignment="LowerLeft" childAlignment="LowerLeft" visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink|Black">
+	<Button class="tp50" onClick="getOwnDraws" color="#FF8000" tooltip="My (_(_)||D-.." tooltipPosition="Above"><Text fontStyle= "Bold"><textcolor color="#000080">Draw?</textcolor></Text>    </Button>	
+	<Button class="tp50" onClick="VoteHistoryUI(player)" color="#800020" tooltip="Vote History" tooltipPosition="Above"><Text fontStyle= "Bold"><textcolor color="#fffdd0">Votes?</textcolor></Text>    </Button>
+	<Button class="tp50" onClick="tellRoleButtonUIB" color="#0080F8" tooltip="My Role" tooltipPosition="Above"><Text fontStyle= "Bold"><textcolor color="#333333">Role?</textcolor></Text>    </Button>
 </HorizontalLayout>
 
 <HorizontalLayout padding="0 260 -45 0" height="4%" width="40%" rectAlignment="LowerRight" visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink">
