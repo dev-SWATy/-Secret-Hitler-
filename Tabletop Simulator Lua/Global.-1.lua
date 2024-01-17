@@ -2001,7 +2001,7 @@ options = {
 
 	autoNotHitler = true,
 	autoDrawConflicts = true,
-	tylerConflict = false,
+	tylerConflict = true,
 	allowGetDraws = true,
     autoGetDraws = true,
     beepEnabled = false,
@@ -3006,7 +3006,7 @@ function settingsPannelMakeButtons()
 			settingsPannel.createInput(inputParams)
 		end
 		makeSquareButtonLabel(settingsPannel, options.autoDrawConflicts, check_string, '', 'Auto Conflict Lines', 'autoDrawConflictsSwitch', {startX, 0.2, startZ + offsetZ * 2}, 4.9, true)
-		makeSquareButtonLabel(settingsPannel, options.tylerConflict, check_string, '', 'Tyler Conflict Lines', 'tylerConflictFlip', {startX + 1.3, 0.2, startZ + offsetZ * 3}, 4.8, false, tylerConfToolTip)
+		makeSquareButtonLabel(settingsPannel, options.tylerConflict, check_string, '', 'Tyler Conflict Lines', 'tylerConflictFlip', {startX + 1.3, 0.2, startZ + offsetZ * 3}, 4.8, true, tylerConfToolTip)
 		makeSquareButtonLabel(settingsPannel, options.autoNotHitler, check_string, '', 'Auto Not Hitler', 'autoNotHitlerSwitch', {startX, 0.2, startZ + offsetZ * 4}, 4.1, true)
 		makeSquareButtonLabel(settingsPannel, options.shufflePlayers, check_string, '', 'Shuffle players', 'shufflePlayersFlip', {startX, 0.2, startZ + offsetZ * 5}, 4, true)
 		makeSquareButtonLabel(settingsPannel, options.shuffleHost, check_string, '', 'Shuffle host', 'shuffleHostFlip', {startX + 1.3, 0.2, startZ + offsetZ * 6}, 3.3, options.shufflePlayers)
