@@ -188,18 +188,30 @@
         width="100%"
         color="rgba(1,1,1,0.7)"
         text="Enigma Engine"
-        textColor="rgba(1,1,1,0.9)"
+        textColor="c"
         fontStyle="Bold"
-        fontSize="24"
-        rectAlignment="UpperLeft"
+        fontSize="20"
+        rectAlignment="UpperCenter"
+    >
+    </Text>
+
+    <Text
+        height="20%"
+        width="100%"
+        color="rgba(0.224, 1.0, 0.078, 1)"
+        text="Drag me!"
+        textColor="#39ff14"
+        fontStyle="Italic"
+        fontSize="14"
+        rectAlignment="LowerCenter"
     >
     </Text>
 
     <VerticalLayout
-        padding="0 0 0 10"
-        height="80%"
+        padding="0 0 0 -5"
+        height="60%"
         width="90%"
-        rectAlignment="LowerCenter"
+        rectAlignment="MiddleCenter"
         allowDragging="false"
         returnToOriginalPositionWhenReleased="false"
         visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink|Black"
