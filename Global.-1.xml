@@ -177,11 +177,14 @@
     height="20%"
     width="10%"
     color="rgba(0,0,0,0.8)"
-    rectAlignment="MiddleRight"
+    rectAlignment="UpperLeft"
+    childAlignment="UpperCenter"
+    childForceExpandHeight="false"
     hideAnimation="FadeOut"
     allowDragging="true"
     animationDuration="0.5"
     returnToOriginalPositionWhenReleased="false"
+    visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink|Black"
 >
     <Text
         height="20%"
@@ -199,7 +202,7 @@
         height="20%"
         width="100%"
         color="rgba(0.224, 1.0, 0.078, 1)"
-        text="Drag me!"
+        text="| | | Drag me! | | |"
         textColor="#39ff14"
         fontStyle="Italic"
         fontSize="14"
@@ -209,7 +212,7 @@
 
     <VerticalLayout
         padding="0 0 0 -5"
-        height="60%"
+        height="65%"
         width="90%"
         rectAlignment="MiddleCenter"
         allowDragging="false"
@@ -225,20 +228,20 @@
             tooltipBackgroundColor="rgba(0,0,0,1)"
         >
             <Text fontStyle="Bold">
-                <textcolor color="#d3d3d3">Draw?</textcolor>
+                <textcolor color="#d3d3d3">a) Draw?</textcolor>
             </Text>
         </Button>
         
         <Button
             class="tp50"
-            onClick="VoteHistoryUI(player)"
+            onClick="VoteHistoryUI"
             color="#800020"
             tooltip="Vote History"
             tooltipPosition="Above"
             tooltipBackgroundColor="rgba(0,0,0,1)"
         >
             <Text fontStyle="Bold">
-                <textcolor color="#fffdd0">Votes?</textcolor>
+                <textcolor color="#fffdd0">b) Votes?</textcolor>
             </Text>
         </Button>
 
@@ -251,7 +254,7 @@
             tooltipBackgroundColor="rgba(0,0,0,1)"
         >
             <Text fontStyle="Bold">
-                <textcolor color="#eee8aa">Role?</textcolor>
+                <textcolor color="#eee8aa">c) Role?</textcolor>
             </Text>
         </Button>
     </VerticalLayout>
@@ -354,4 +357,3 @@
         X
     </Button>
 </HorizontalLayout>
-
