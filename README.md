@@ -8,6 +8,8 @@ Enhanced version of the classic "Secret Hitler," players are divided into two te
 
 **Interactive Features:** Enhanced player interactions and communication tools.
 
+![Enigma Engine Interactive Feature Demo](https://github.com/dev-SWATy/-Secret-Hitler-Circle-of-Secrets-/blob/main/assets/Enigma%20Engine%20Toggle%20U.gif?raw=true)
+
 ## Workshop and Subscription
 
 Interested in playing "◉ Secret Hitler: Circle of Secrets ◉"? Check out the workshop and subscribe to stay updated with the latest enhancements: [Subscribe on Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3142735640).
