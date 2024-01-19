@@ -220,7 +220,6 @@
         visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink|Black"
     >
         <Button
-            class="tp50"
             onClick="getOwnDraws"
             color="#4682b4"
             tooltip="My (_(_)||D-.."
@@ -233,7 +232,6 @@
         </Button>
         
         <Button
-            class="tp50"
             onClick="VoteHistoryUI"
             color="#800020"
             tooltip="Vote History"
@@ -246,7 +244,6 @@
         </Button>
 
         <Button
-            class="tp50"
             onClick="tellRoleButtonUIB"
             color="#556b2f"
             tooltip="My Role"
