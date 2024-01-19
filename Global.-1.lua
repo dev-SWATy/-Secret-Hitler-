@@ -10944,8 +10944,23 @@ function getLineDrawer()
 	end
 end
 
+-- Declare 'toggleCount' outside the function to maintain its state between calls
+local toggleCount = 0
+function togglePanel()
+    local panelID = 'Enigma_Engine_ON'
+	local panelIDoff = 'Enigma_Engine_OFF'
 
-
-
+    if toggleCount == 0 then
+        -- Hide the panel
+        self.UI.hide(panelID)
+		self.UI.show(panelIDoff)
+        toggleCount = 1
+    else
+        -- Show the panel
+		self.UI.hide(panelIDoff)
+        self.UI.show(panelID)
+        toggleCount = 0
+    end
+end
 
 ----#include \SecretHitlerCE\common.ttslua

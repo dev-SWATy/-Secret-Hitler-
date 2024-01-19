@@ -173,88 +173,144 @@
 </VerticalLayout>
 
 <Panel
-    id="ready"
+    id="togglePanel"
     height="20%"
     width="10%"
-    color="rgba(0,0,0,0.8)"
+    color="rgba(0,0,0,0)"
     rectAlignment="UpperLeft"
-    childAlignment="UpperCenter"
-    childForceExpandHeight="false"
-    hideAnimation="FadeOut"
+    offsetXY= "200 -250"
+
     allowDragging="true"
-    animationDuration="0.5"
+    animationDuration="0.8"
     returnToOriginalPositionWhenReleased="false"
     visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink|Black"
 >
     <Text
-        height="20%"
-        width="100%"
-        color="rgba(1,1,1,0.7)"
+        height="15%"
+        width="90%"
+        color="rgba(0.224, 1.0, 0.078, 1)"
         text="Enigma Engine"
-        textColor="c"
+        textColor="#39ff14"
         fontStyle="Bold"
         fontSize="20"
         rectAlignment="UpperCenter"
+        offsetXY= "0 -2"
     >
     </Text>
 
-    <Text
-        height="20%"
-        width="100%"
-        color="rgba(0.224, 1.0, 0.078, 1)"
-        text="| | | Drag me! | | |"
-        textColor="#39ff14"
-        fontStyle="Italic"
-        fontSize="14"
-        rectAlignment="LowerCenter"
-    >
-    </Text>
-
-    <VerticalLayout
-        padding="0 0 0 -5"
-        height="65%"
+    <Panel
+        id="Enigma_Engine_OFF"
+        rectAlignment="UpperCenter"
+        offsetXY= "0 -2"
+        height="15%"
         width="90%"
-        rectAlignment="MiddleCenter"
+        color="rgba(0,0,0,0)"
+
         allowDragging="false"
+        animationDuration="0.8"
         returnToOriginalPositionWhenReleased="false"
         visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink|Black"
-    >
+    >   
         <Button
-            onClick="getOwnDraws"
-            color="#4682b4"
-            tooltip="My (_(_)||D-.."
+            rectAlignment="UpperCenter"
+            height="100%"
+            width="100%"
+            onClick="togglePanel"
+            color="rgba(0,0,0,0.8)"
+            tooltip="Toggle Panel"
             tooltipPosition="Above"
-            tooltipBackgroundColor="rgba(0,0,0,1)"
+            tooltipTextColor= "#36454f"
+            tooltipBackgroundColor="#abcdef"
+            offsetXY= "0 -2"
         >
-            <Text fontStyle="Bold">
-                <textcolor color="#d3d3d3">a) Draw?</textcolor>
-            </Text>
-        </Button>
-        
-        <Button
-            onClick="VoteHistoryUI"
-            color="#800020"
-            tooltip="Vote History"
-            tooltipPosition="Above"
-            tooltipBackgroundColor="rgba(0,0,0,1)"
-        >
-            <Text fontStyle="Bold">
-                <textcolor color="#fffdd0">b) Votes?</textcolor>
-            </Text>
         </Button>
 
+    </Panel>
+
+    <Panel
+        id="Enigma_Engine_ON"
+        height="100%"
+        width="100%"
+        color="rgba(0,0,0,0.8)"
+
+        allowDragging="false"
+        animationDuration="0.8"
+        returnToOriginalPositionWhenReleased="false"
+        visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink|Black"
+    >    
         <Button
-            onClick="tellRoleButtonUIB"
-            color="#556b2f"
-            tooltip="My Role"
+            rectAlignment="UpperCenter"
+            height="100%"
+            width="100%"
+            onClick="togglePanel"
+            color="rgba(0,0,0,0)"
+            tooltip="Toggle Panel"
             tooltipPosition="Above"
-            tooltipBackgroundColor="rgba(0,0,0,1)"
+            tooltipTextColor= "#36454f"
+            tooltipBackgroundColor="#abcdef"
+            offsetXY= "0 -2"
         >
-            <Text fontStyle="Bold">
-                <textcolor color="#eee8aa">c) Role?</textcolor>
-            </Text>
         </Button>
-    </VerticalLayout>
+
+        <Text
+            height="20%"
+            width="100%"
+            color="rgba(0.224, 1.0, 0.078, 1)"
+            text="| | | Drag me! | | |"
+            textColor="#39ff14"
+            fontStyle="Italic"
+            fontSize="14"
+            rectAlignment="LowerCenter"
+        >
+        </Text>
+
+        <VerticalLayout
+            padding="0 0 0 -5"
+            height="65%"
+            width="90%"
+            rectAlignment="MiddleCenter"
+            allowDragging="false"
+            returnToOriginalPositionWhenReleased="false"
+            visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink|Black"
+        >
+            <Button
+                onClick="getOwnDraws"
+                color="#4682b4"
+                tooltip="Or type 'h'"
+                tooltipPosition="Above"
+                tooltipBackgroundColor="rgba(0,0,0,1)"
+            >
+                <Text fontStyle="Bold">
+                    <textcolor color="#d3d3d3">a) Draw?</textcolor>
+                </Text>
+            </Button>
+            
+            <Button
+                onClick="VoteHistoryUI"
+                color="#800020"
+                tooltip="Or type 'h'"
+                tooltipPosition="Above"
+                tooltipBackgroundColor="rgba(0,0,0,1)"
+            >
+                <Text fontStyle="Bold">
+                    <textcolor color="#fffdd0">b) Votes?</textcolor>
+                </Text>
+            </Button>
+
+            <Button
+                onClick="tellRoleButtonUIB"
+                color="#556b2f"
+                tooltip="Or type 'r'"
+                tooltipPosition="Above"
+                tooltipBackgroundColor="rgba(0,0,0,1)"
+            >
+                <Text fontStyle="Bold">
+                    <textcolor color="#eee8aa">c) Role?</textcolor>
+                </Text>
+            </Button>
+        </VerticalLayout>
+    </Panel>
+
 </Panel>
 
 <HorizontalLayout
