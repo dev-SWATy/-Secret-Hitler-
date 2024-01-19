@@ -1,4 +1,4 @@
-# MustacheMischief
+# ◉ Secret Hitler: Circle of Secrets ◉
 # lua-tts-secret-hitler
 
 ## 0.0.1 - 2023-04-14
