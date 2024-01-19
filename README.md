@@ -1,8 +1,20 @@
 # ◉ Secret Hitler: Circle of Secrets ◉
-# lua-tts-secret-hitler
 
-## 0.0.1 - 2023-04-14
-1. Initial start of new SH table. Items, objects, skin, ideas are based on prior work of the following community members (In no particular order):
+## Game Overview
+
+Enhanced version of the classic "Secret Hitler," players are divided into two teams: the Liberals and the Fascists, with one player secretly assuming the role of Hitler. The Liberals aim to maintain democracy by enacting liberal policies or by identifying and stopping Hitler. The Fascists, under the guise of Hitler, work covertly to seize power by enacting fascist policies or by successfully electing Hitler as chancellor.
+
+## What's New
+
+**Interactive Features:** Enhanced player interactions and communication tools.
+
+## Workshop and Subscription
+
+Interested in playing "◉ Secret Hitler: Circle of Secrets ◉"? Check out the workshop and subscribe to stay updated with the latest enhancements: [Subscribe on Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3142735640).
+
+## Acknowledgments
+
+Items, objects, skin, ideas are based on prior work of the following community members (In no particular order):
      - Lost Savage[^1]
      - Sionarr
      - l55tremine[^2]
