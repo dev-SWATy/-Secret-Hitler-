@@ -1,8 +1,12 @@
 # ◉ Secret Hitler: Circle of Secrets ◉
 
+![](https://github.com/dev-SWATy/-Secret-Hitler-Circle-of-Secrets-/blob/main/assets/secrethitler.gif?raw=true)
+
 ## Game Overview
 
 Enhanced version of the classic "Secret Hitler," players are divided into two teams: the Liberals and the Fascists, with one player secretly assuming the role of Hitler. The Liberals aim to maintain democracy by enacting liberal policies or by identifying and stopping Hitler. The Fascists, under the guise of Hitler, work covertly to seize power by enacting fascist policies or by successfully electing Hitler as chancellor.
+
+Learn more about the original game on the [official Secret Hitler website](https://www.secrethitler.com/).
 
 ## What's New
 
