@@ -65,107 +65,107 @@
     childForceExpandHeight="false"
 >
     <!-- The basic player text -->
-    <Text 
-        class="outline" 
-        id="playerWhite" 
-        color="#FFFFFF" 
+    <Text
+        class="outline"
+        id="playerWhite"
+        color="#FFFFFF"
         visibility="White"
     >
         Player White:
     </Text>
 
-    <Text 
-        class="outline" 
-        id="playerBrown" 
-        color="#703A16" 
+    <Text
+        class="outline"
+        id="playerBrown"
+        color="#703A16"
         visibility="Brown"
     >
         Player Brown:
     </Text>
 
-    <Text 
-        class="outline" 
-        id="playerRed" 
-        color="#DA1917" 
+    <Text
+        class="outline"
+        id="playerRed"
+        color="#DA1917"
         visibility="Red"
     >
         Player Red:
     </Text>
 
-    <Text 
-        class="outline" 
-        id="playerOrange" 
-        color="#F3631C" 
+    <Text
+        class="outline"
+        id="playerOrange"
+        color="#F3631C"
         visibility="Orange"
     >
         Player Orange:
     </Text>
 
-    <Text 
-        class="outline" 
-        id="playerYellow" 
-        color="#E6E42B" 
+    <Text
+        class="outline"
+        id="playerYellow"
+        color="#E6E42B"
         visibility="Yellow"
     >
         Player Yellow:
     </Text>
 
-    <Text 
-        class="outline" 
-        id="playerGreen" 
-        color="#30B22A" 
+    <Text
+        class="outline"
+        id="playerGreen"
+        color="#30B22A"
         visibility="Green"
     >
         Player Green:
     </Text>
 
-    <Text 
-        class="outline" 
-        id="playerTeal" 
-        color="#20B09A" 
+    <Text
+        class="outline"
+        id="playerTeal"
+        color="#20B09A"
         visibility="Teal"
     >
         Player Teal:
     </Text>
 
-    <Text 
-        class="outline" 
-        id="playerBlue" 
-        color="#1E87FF" 
+    <Text
+        class="outline"
+        id="playerBlue"
+        color="#1E87FF"
         visibility="Blue"
     >
         Player Blue:
     </Text>
 
-    <Text 
-        class="outline" 
-        id="playerPurple" 
-        color="#9F1FEF" 
+    <Text
+        class="outline"
+        id="playerPurple"
+        color="#9F1FEF"
         visibility="Purple"
     >
         Player Purple:
     </Text>
 
-    <Text 
-        class="outline" 
-        id="playerPink" 
-        color="#F36FCD" 
+    <Text
+        class="outline"
+        id="playerPink"
+        color="#F36FCD"
         visibility="Pink"
     >
         Player Pink:
     </Text>
-    
-    <Text 
-        class="outline" 
-        id="youNotPlaying" 
+
+    <Text
+        class="outline"
+        id="youNotPlaying"
         color="#FFFFFF"
     >
         You are not playing!
     </Text>
 
-    <Text 
-        class="outline" 
-        id="playerBlack" 
+    <Text
+        class="outline"
+        id="playerBlack"
         color="#FFFFFF"
     >
         You are not playing!
@@ -185,18 +185,7 @@
     returnToOriginalPositionWhenReleased="false"
     visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink|Black"
 >
-    <Text
-        height="15%"
-        width="90%"
-        color="rgba(0.224, 1.0, 0.078, 1)"
-        text="Enigma Engine"
-        textColor="#39ff14"
-        fontStyle="Bold"
-        fontSize="20"
-        rectAlignment="UpperCenter"
-        offsetXY= "0 -2"
-    >
-    </Text>
+
 
     <Panel
         id="Enigma_Engine_OFF"
@@ -205,12 +194,11 @@
         height="15%"
         width="90%"
         color="rgba(0,0,0,0)"
-
         allowDragging="false"
         animationDuration="0.8"
         returnToOriginalPositionWhenReleased="false"
         visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink|Black"
-    >   
+    >
         <Button
             rectAlignment="UpperCenter"
             height="100%"
@@ -225,6 +213,20 @@
         >
         </Button>
 
+        <Text
+            height="100%"
+            width="100%"
+            color="rgba(1,1,1,1)"
+            textColor="#39ff14"
+            fontStyle="Bold"
+            fontSize="20"
+            rectAlignment="UpperCenter"
+            offsetXY= "0 -2"
+        >
+            <textcolor color="rgba(1,1,1,1)">Enigma Engine </textcolor>
+            <textcolor color="#FF0000">✗</textcolor>
+        </Text>
+
     </Panel>
 
     <Panel
@@ -232,12 +234,12 @@
         height="100%"
         width="100%"
         color="rgba(0,0,0,0.8)"
-
+        active="false"
         allowDragging="false"
         animationDuration="0.8"
         returnToOriginalPositionWhenReleased="false"
         visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink|Black"
-    >    
+    >
         <Button
             rectAlignment="UpperCenter"
             height="100%"
@@ -251,6 +253,20 @@
             offsetXY= "0 -2"
         >
         </Button>
+
+        <Text
+            height="15%"
+            width="90%"
+            color="rgba(1,1,1,1)"
+            textColor="#39ff14"
+            fontStyle="Bold"
+            fontSize="20"
+            rectAlignment="UpperCenter"
+            offsetXY= "0 -2"
+        >
+            <textcolor color="rgba(1,1,1,1)">Enigma Engine </textcolor>
+            <textcolor color="#39ff14">✓</textcolor>
+        </Text>
 
         <Text
             height="20%"
@@ -284,7 +300,7 @@
                     <textcolor color="#d3d3d3">a) Draw?</textcolor>
                 </Text>
             </Button>
-            
+
             <Button
                 onClick="VoteHistoryUI"
                 color="#800020"
@@ -320,12 +336,14 @@
     rectAlignment="LowerRight"
     visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink"
 >
+<!-- Connected to Lua script via id: claim??? -->
     <Button class="claims" id="claim???" onClick="buttonClaim">
         <Text>
             <textcolor color="#000000">Claim ???</textcolor>
         </Text>
     </Button>
 
+<!-- Connected to Lua script via id: claimFFF -->
     <Button class="claims" id="claimFFF" onClick="buttonClaim">
         <Text>
             <textcolor color="#000000">Claim </textcolor>
@@ -333,6 +351,7 @@
         </Text>
     </Button>
 
+<!-- Connected to Lua script via id: claimFFL -->
     <Button class="claims" id="claimFFL" onClick="buttonClaim">
         <Text>
             <textcolor color="#000000">Claim </textcolor>
@@ -341,6 +360,7 @@
         </Text>
     </Button>
 
+<!-- Connected to Lua script via id: claimFLL -->
     <Button class="claims" id="claimFLL" onClick="buttonClaim">
         <Text>
             <textcolor color="#000000">Claim </textcolor>
@@ -349,6 +369,7 @@
         </Text>
     </Button>
 
+<!-- Connected to Lua script via id: claimLLL -->
     <Button class="claims" id="claimLLL" onClick="buttonClaim">
         <Text>
             <textcolor color="#000000">Claim </textcolor>
@@ -356,6 +377,7 @@
         </Text>
     </Button>
 
+<!-- Connected to Lua script via id: claimLib -->
     <Button class="claims" id="claimLib" onClick="buttonClaim">
         <Text>
             <textcolor color="#000000">Claim </textcolor>
@@ -363,7 +385,7 @@
         </Text>
     </Button>
 </HorizontalLayout>
- 
+
 <HorizontalLayout
     padding="0 260 0 0"
     height="4%"
@@ -371,12 +393,14 @@
     rectAlignment="LowerRight"
     visibility="White|Brown|Red|Orange|Yellow|Green|Teal|Blue|Purple|Pink"
 >
+<!-- Connected to Lua script via id: claim?? -->
     <Button class="claims" id="claim??" onClick="buttonClaim">
         <Text>
             <textcolor color="#000000">Claim ??</textcolor>
         </Text>
     </Button>
 
+<!-- Connected to Lua script via id: claimFF -->
     <Button class="claims" id="claimFF" onClick="buttonClaim">
         <Text>
             <textcolor color="#000000">Claim </textcolor>
@@ -384,6 +408,7 @@
         </Text>
     </Button>
 
+<!-- Connected to Lua script via id: claimFL -->
     <Button class="claims" id="claimFL" onClick="buttonClaim">
         <Text>
             <textcolor color="#000000">Claim </textcolor>
@@ -392,6 +417,7 @@
         </Text>
     </Button>
 
+<!-- Connected to Lua script via id: claimLL -->
     <Button class="claims" id="claimLL" onClick="buttonClaim">
         <Text>
             <textcolor color="#000000">Claim </textcolor>
@@ -399,6 +425,7 @@
         </Text>
     </Button>
 
+<!-- Connected to Lua script via id: claimFas -->
     <Button class="claims" id="claimFas" onClick="buttonClaim">
         <Text>
             <textcolor color="#000000">Claim </textcolor>
@@ -406,6 +433,7 @@
         </Text>
     </Button>
 
+<!-- Connected to Lua script via id: claimX -->
     <Button class="claims" id="claimX" onClick="buttonClaim">
         X
     </Button>

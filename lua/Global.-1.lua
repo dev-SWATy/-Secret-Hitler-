@@ -1,12 +1,16 @@
 
+-- The version number of the script
 UPDATE_VERSION = 5.5
 
 --Workshop ID 2953402973
 
 
+-- Tracks the time elapsed since the start of the game
 timeSinceStart = 0
 timeSinceUV = 0
+-- A table to keep track of silenced players
 silenced = {}
+-- Flag to indicate if silencing is active
 bolSilenced = false
 bolPresClicked = false
 --bolTD = false
@@ -65,8 +69,8 @@ notecardName = {}
 notecardDesc = {}
 --Tyler's Notecard
 notecardName[76561198028150525] = "Friendly Tyler's Rules"
-notecardDesc[76561198028150525] = "Try not to speak over others\nLibs should not ditch libs as chancellor\n" .. 
-									"Open ditch/unclaimed gets a conflict line\n" .. 
+notecardDesc[76561198028150525] = "Try not to speak over others\nLibs should not ditch libs as chancellor\n" ..
+									"Open ditch/unclaimed gets a conflict line\n" ..
 									"No personal insults (unless you are playing your role)\n" ..
 									"Tyler must be played to in hitler territory and CANNOT be shot\n"
 
@@ -89,7 +93,7 @@ notecardDesc[76561197997616995] = "1. Tyler is synonymous with the AI in our gam
 function onObjectSpawn(object)
     tmpObjCode = string.lower(object.script_code)
     if string.match(tmpObjCode, "roles") or string.match(tmpObjCode, "drawlog") then
-        
+
 
         promotedPlayers = returnColor("Red") .. "Promoted Players: "
 		objGuid = returnColor("Orange") .. "GUID: " .. object.guid
@@ -100,9 +104,9 @@ function onObjectSpawn(object)
             end
         end
 		promotedPlayers = string.sub(promotedPlayers,1,string.len(promotedPlayers)-2)
-	
+
         broadcastToAll("POSSIBLE CHEATING DETECTED \n" .. objGuid .. objName .. "\n" .. promotedPlayers, stringColorToRGB("Red"))
-    
+
     end
     --print(object.script_code)
 end
@@ -110,7 +114,7 @@ end
 function onObjectDestroy(object)
     tmpObjCode = string.lower(object.script_code)
     if string.match(tmpObjCode, "roles") or string.match(tmpObjCode, "drawlog") then
-        
+
 
         promotedPlayers = returnColor("Red") .. "Promoted Players: "
 		objGuid = returnColor("Orange") .. "GUID: " .. object.guid
@@ -121,9 +125,9 @@ function onObjectDestroy(object)
             end
         end
 		promotedPlayers = string.sub(promotedPlayers,1,string.len(promotedPlayers)-2)
-	
+
         broadcastToAll("POSSIBLE CHEATING DETECTED \n" .. objGuid .. objName .. "\n" .. promotedPlayers, stringColorToRGB("Red"))
-    
+
     end
 
     --print(object.script_code)
@@ -1314,7 +1318,7 @@ function makeClaim(player, messageTable) -- message table: claim ffl fl
 	local noteNum = 1
 	local conflicted = nil
 
-	
+
 
 	-- first parameter
 	if (claimWorks(messageTable[2]) or inspWorks(messageTable[2])) then -- or player.steam_id == "76561198108768977"
@@ -1694,11 +1698,11 @@ function getOwnDraws(player)
 				end
 			end
         else
-            
+
 		end
         printString = printString.."\n"
 	end
-  
+
   printToColor(printString, player.color)
 
 end
@@ -1716,8 +1720,8 @@ end
 function printDraws(player, messageTable) -- left on top
 	local publicPrint = true
     local printString = ""
-	if player ~= "auto" then printString = player.steam_name..' got card draws:\n' 
-    
+	if player ~= "auto" then printString = player.steam_name..' got card draws:\n'
+
     end
 
 	if (player.color == "Black" and messageTable[2] ~= "p") then
@@ -1817,11 +1821,13 @@ radio_string = '●'
 check_string = '✓'
 
 --Decks/Cards
+-- Expansion Content #246: This line may be related to an expansion because it mentions '--extraRole_card_guids = {'675a6f', '16e480', '0a5960', '02b664', '328440', '05df40', '98f4dd', '7b4b46', 'ccb7ed', 'c2309a'}'. Review needed.
 --extraRole_card_guids = {'675a6f', '16e480', '0a5960', '02b664', '328440', '05df40', '98f4dd', '7b4b46', 'ccb7ed', 'c2309a'}
 fakeMembership_card_guid = '55d1c3'
 --fascistMembership_card_guid = 'e4d489'
 --liberalMembership_card_guid = 'a73564'
 GREY_POLICY_RIGHT = -9
+-- Expansion Content #245: This line may be related to an expansion because it mentions 'GREY_EXPANSION_RIGHT = 9'. Review needed.
 GREY_EXPANSION_RIGHT = 9
 
 drawLog = {}
@@ -1981,9 +1987,13 @@ options = {
 	autoNotate = true,
 	dealPartyCards = false,
 	dealRoleCards = false,
+-- Expansion Content #244: This line may be related to an expansion because it mentions 'expansionAmount = 2,'. Review needed.
 	expansionAmount = 2,
+-- Expansion Content #243: This line may be related to an expansion because it mentions 'expansionOptionEnabled = 0, -- [1 SwapGov, 2 Reverse, 4 SwapPower, 8 SetupPowerAbilities]'. Review needed.
 	expansionOptionEnabled = 0, -- [1 SwapGov, 2 Reverse, 4 SwapPower, 8 SetupPowerAbilities]
+-- Expansion Content #242: This line may be related to an expansion because it mentions 'expansionOptionStatus = 0, -- [1 SwapGov, 2 Reverse]'. Review needed.
 	expansionOptionStatus = 0, -- [1 SwapGov, 2 Reverse]
+-- Expansion Content #241: This line may be related to an expansion because it mentions 'expansionOptionText = {'Pres -> Chan', 'Chan -> Pres', 'Clockwise', 'Counterclockwise'},'. Review needed.
 	expansionOptionText = {'Pres -> Chan', 'Chan -> Pres', 'Clockwise', 'Counterclockwise'},
 	fascistCards = 11,
 	greyCards = 0,
@@ -2046,14 +2056,14 @@ function onLoad(saveString)
 
     --objBeep = getObjectFromGUID("13e083")
     createRoleZones()
-	
+
 	--Set notecard to uninteractable + hidden
 	getObjectFromGUID("db42fc").interactable = false
 	tempNoteCardPos = getObjectFromGUID("db42fc").getPosition()
 	for i, value in pairs(Player.getPlayers()) do
-		if value.host == true then 
+		if value.host == true then
 			tempID = tonumber(value.steam_id)
-			
+
 			if notecardName[tempID] ~= nil then
 				getObjectFromGUID("db42fc").setPosition({tempNoteCardPos.x, 1, tempNoteCardPos.z})
 				getObjectFromGUID("db42fc").setName(notecardName[tempID])
@@ -2061,16 +2071,16 @@ function onLoad(saveString)
 			else
 				getObjectFromGUID("db42fc").setPosition({tempNoteCardPos.x, 0, tempNoteCardPos.z})
 			end
-			
+
 --[[ 			if (value.steam_id ~= "76561198028150525") then
 				getObjectFromGUID("db42fc").setPosition({tempNoteCardPos.x, 0, tempNoteCardPos.z})
 			end --]]
 		end
-	end	
+	end
 
-    
-	
-	
+
+
+
 
 
 	if not (saveString == '') then
@@ -2173,7 +2183,7 @@ function createRoleZones()
 
         pos_current = getObjectFromGUID(HAND_ZONE_GUIDSc[color]).getPosition()
         pos_target = getObjectFromGUID(HAND_ZONE_GUIDSc[color]).getTransformForward()
-        
+
         pos = {
 			x = pos_current.x + pos_target.x*15,
 			y = pos_current.y + pos_target.y*15,
@@ -2219,7 +2229,7 @@ function recreateWallText(arrayNumber)
 			sound = false,
 			snap_to_grid = false,
 			})
-		
+
 		lastVote_guids[2] = tempNewText.guid
 		--cd55ea
 
@@ -2236,7 +2246,7 @@ function recreateWallText(arrayNumber)
 		lastVote_guids[3] = tempNewText.guid
 
 		--0d8b0c
-	
+
 	elseif arrayNumber == 4 then
 		tempNewText = spawnObject({
 			type = "3DText",
@@ -2247,13 +2257,13 @@ function recreateWallText(arrayNumber)
 			snap_to_grid = false,
 			})
 		lastVote_guids[4] = tempNewText.guid
-		
+
 		--2923c6
 
-		
+
 	end
-	
-	
+
+
 
 end
 
@@ -2499,6 +2509,7 @@ function alwaysInit()
 	refreshUI()
 	updateClaimUI()
 	refreshStatusButtons()
+-- Expansion Content #240: This line may be related to an expansion because it mentions 'refreshExpansionButtons()'. Review needed.
 	refreshExpansionButtons()
 	refreshBelowLibButtons()
 
@@ -2579,11 +2590,13 @@ function refreshStatusButtons()
 	end
 end
 
+-- Expansion Content #239: This line may be related to an expansion because it mentions 'function refreshExpansionButtons()'. Review needed.
 function refreshExpansionButtons()
 	local fasBoard = getObjectFromGUID(fasPannel_guid)
 	if fasBoard then
 		fasBoard.clearButtons()
 		local button = {
+-- Expansion Content #238: This line may be related to an expansion because it mentions 'click_function = 'expansionOptionStatusSwapGov','. Review needed.
 			click_function = 'expansionOptionStatusSwapGov',
 			function_owner = self,
 			position = {12, 0.2, 6},
@@ -2592,31 +2605,40 @@ function refreshExpansionButtons()
 			height = 800,
 			font_size = 360
 		}
+-- Expansion Content #237: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionStatus, 1) == 1 then'. Review needed.
 		if bit32.band(options.expansionOptionStatus, 1) == 1 then
 			button.font_color = {0, 0, 0}
 			button.color =  stringColorToRGB('Orange')
+-- Expansion Content #236: This line may be related to an expansion because it mentions 'button.label = options.expansionOptionText[2]'. Review needed.
 			button.label = options.expansionOptionText[2]
 		else
 			button.font_color = stringColorToRGB('White')
 			button.color =  boardGreen_rgb
+-- Expansion Content #235: This line may be related to an expansion because it mentions 'button.label = options.expansionOptionText[1]'. Review needed.
 			button.label = options.expansionOptionText[1]
 		end
+-- Expansion Content #234: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionEnabled, 1) == 1 then'. Review needed.
 		if bit32.band(options.expansionOptionEnabled, 1) == 1 then
 			fasBoard.createButton(button)
 		end
 
+-- Expansion Content #233: This line may be related to an expansion because it mentions 'button.click_function = 'expansionOptionStatusReverse''. Review needed.
 		button.click_function = 'expansionOptionStatusReverse'
 		button.position = {-12, 0.2, 6}
 		button.width = 2800
+-- Expansion Content #232: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionStatus, 2) == 2 then'. Review needed.
 		if bit32.band(options.expansionOptionStatus, 2) == 2 then
 			button.font_color = {0, 0, 0}
 			button.color =  stringColorToRGB('Orange')
+-- Expansion Content #231: This line may be related to an expansion because it mentions 'button.label = options.expansionOptionText[4]'. Review needed.
 			button.label = options.expansionOptionText[4]
 		else
 			button.font_color = stringColorToRGB('White')
 			button.color =  boardGreen_rgb
+-- Expansion Content #230: This line may be related to an expansion because it mentions 'button.label = options.expansionOptionText[3]'. Review needed.
 			button.label = options.expansionOptionText[3]
 		end
+-- Expansion Content #229: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionEnabled, 2) == 2 then'. Review needed.
 		if bit32.band(options.expansionOptionEnabled, 2) == 2 then
 			fasBoard.createButton(button)
 		end
@@ -2650,6 +2672,7 @@ function init()
 		if tmpObj == nil then error(player .. ' Hidden Zone') end
 	end
 
+-- Expansion Content #228: This line may be related to an expansion because it mentions '--Expansion'. Review needed.
 	--Expansion
 	tmpObj = getDeckFromZoneByGUID(ABILITIESPILE_ZONE_GUID)
 	if tmpObj then	tmpObj.interactable = false end
@@ -2772,7 +2795,7 @@ function onChat(messageIn, player)
     elseif messageTable[1] == '!return' then
 		if messageTable[2] == "all" and player.admin then
 			returnVotes("script","script","script")
-		else	
+		else
         	returnOwnVote(player.color)
 		end
         return false;
@@ -2800,7 +2823,7 @@ function onChat(messageIn, player)
 	end
 
 	local tempVariable = player.steam_id
-	
+
 	if silenced[tempVariable] ~= nil then
 		return false
 	end
@@ -2837,11 +2860,11 @@ end
 
 function nikosCheck()
 	local libCount = 0
-	
+
 	for i, playerColor in pairs(players) do
 		--print(playerColor .. roles[playerColor])
         if playerStatus[playerColor] ~= 5 and playerStatus[playerColor] ~= 6 then
-            if roles[playerColor] == "liberal" then 
+            if roles[playerColor] == "liberal" then
                 libCount = libCount + 1
             else
                 libCount = libCount - 1
@@ -2902,7 +2925,7 @@ function settingsPannelMakeButtons()
 		makeDecIncButtonsLabel(settingsPannel, minPlayers, '-', '+', '', 'decMinPlayers', 'incMinPlayers', {startX, 0.2, startZ}, 6.1, false, true, minToolTip, 'clickMinPlayers')
 		makeDecIncButtonsLabel(settingsPannel, maxPlayers, '-', '+', '', 'decMaxPlayers', 'incMaxPlayers', {startX + 9.5, 0.2, startZ}, 6.1, false, true, maxToolTip, 'clickMaxPlayers')
 
---[[ 		
+--[[
 			local inputParams = { --scale = {0.2, 0.2, 0.2},
 			rotation={0,0,0},
 			height=300, width=300, font_size=250, validation=2,
@@ -2915,7 +2938,7 @@ function settingsPannelMakeButtons()
 			inputParams.tooltip = "How many players you require to start"
 			inputParams.validation = 2
 			settingsPannel.createInput(inputParams)
-		
+
 			local inputParams = { --scale = {0.2, 0.2, 0.2},
 			rotation={0,0,0},
 			height=300, width=300, font_size=250, validation=2,
@@ -3031,17 +3054,24 @@ function settingsPannelMakeButtons()
 		makeSquareButtonLabel(settingsPannel, options.nikosRule, check_string, '', 'Vicious Nikos Rule', 'nikosFlip', {startX, 0.2, startZ + offsetZ * 11}, 4.8, true, nikosToolTip)
         makeSquareButtonLabel(settingsPannel, options.discardButtonRule, check_string, '', 'Discard Buttons on Cards', 'discardButtonFlip', {startX, 0.2, startZ + offsetZ * 12}, 6.2, true)
 
+-- Expansion Content #227: This line may be related to an expansion because it mentions '--Expansion'. Review needed.
 		--Expansion
 		local abilitiesDeck = getDeckFromZoneByGUID(ABILITIESPILE_ZONE_GUID)
 		if abilitiesDeck then
 			startZ = 3.7
+-- Expansion Content #226: This line may be related to an expansion because it mentions 'buttonParam.label = '[u]Fan Expansion[/u]''. Review needed.
 			buttonParam.label = '[u]Fan Expansion[/u]'
 			buttonParam.position = {0, 0.2, startZ - 1.4}
 			settingsPannel.createButton(buttonParam)
+-- Expansion Content #225: This line may be related to an expansion because it mentions 'makeDecIncButtonsLabel(settingsPannel, options.expansionAmount, '-', '+', 'Cards', 'decExpansionAmount', 'incExpansionAmount', {startX, 0.2, startZ}, 4.7, false, true)'. Review needed.
 			makeDecIncButtonsLabel(settingsPannel, options.expansionAmount, '-', '+', 'Cards', 'decExpansionAmount', 'incExpansionAmount', {startX, 0.2, startZ}, 4.7, false, true)
+-- Expansion Content #224: This line may be related to an expansion because it mentions 'makeSquareButtonLabel(settingsPannel, bit32.band(options.expansionOptionEnabled, 1) == 1, check_string, '', 'Swap government', 'expansionOptionEnabledSwapGov', {startX, 0.2, startZ + offsetZ}, 4.7, true)'. Review needed.
 			makeSquareButtonLabel(settingsPannel, bit32.band(options.expansionOptionEnabled, 1) == 1, check_string, '', 'Swap government', 'expansionOptionEnabledSwapGov', {startX, 0.2, startZ + offsetZ}, 4.7, true)
+-- Expansion Content #223: This line may be related to an expansion because it mentions 'makeSquareButtonLabel(settingsPannel, bit32.band(options.expansionOptionEnabled, 4) == 4, check_string, '', 'Swap power', 'expansionOptionEnabledSwapPower', {startX + 1.3, 0.2, startZ + offsetZ * 2}, 3.4, bit32.band(options.expansionOptionEnabled, 1) == 1)'. Review needed.
 			makeSquareButtonLabel(settingsPannel, bit32.band(options.expansionOptionEnabled, 4) == 4, check_string, '', 'Swap power', 'expansionOptionEnabledSwapPower', {startX + 1.3, 0.2, startZ + offsetZ * 2}, 3.4, bit32.band(options.expansionOptionEnabled, 1) == 1)
+-- Expansion Content #222: This line may be related to an expansion because it mentions 'makeSquareButtonLabel(settingsPannel, bit32.band(options.expansionOptionEnabled, 2) == 2, check_string, '', 'Reverse', 'expansionOptionEnabledReverse', {startX, 0.2, startZ + offsetZ * 3}, 2.4, true)'. Review needed.
 			makeSquareButtonLabel(settingsPannel, bit32.band(options.expansionOptionEnabled, 2) == 2, check_string, '', 'Reverse', 'expansionOptionEnabledReverse', {startX, 0.2, startZ + offsetZ * 3}, 2.4, true)
+-- Expansion Content #221: This line may be related to an expansion because it mentions 'makeSquareButtonLabel(settingsPannel, bit32.band(options.expansionOptionEnabled, 8) == 8, check_string, '', 'Setup power abilities', 'expansionOptionEnabledSetupPowerAbilities', {startX, 0.2, startZ + offsetZ * 4}, 5.3, true)'. Review needed.
 			makeSquareButtonLabel(settingsPannel, bit32.band(options.expansionOptionEnabled, 8) == 8, check_string, '', 'Setup power abilities', 'expansionOptionEnabledSetupPowerAbilities', {startX, 0.2, startZ + offsetZ * 4}, 5.3, true)
 		end
 
@@ -3098,8 +3128,8 @@ function makeRulesTextBox()
 		objTextRules.TextTool.setFontSize(90)
 		objTextRules.interactable = false
 	else
-		if objTextRules then 
-			destroyObject(objTextRules) 
+		if objTextRules then
+			destroyObject(objTextRules)
 			objTextRules = nil
 		end
 	end
@@ -3234,7 +3264,7 @@ function makeDecIncButtonsLabel(objectIn, valueIn, decButtonTextIn, incButtonTex
 				buttonParam.click_function = incFunctionIn
 			end
 		end
-		
+
 
 		buttonParam.position = {positionIn[1] + valueOffset, positionIn[2], positionIn[3]}
 		objectIn.createButton(buttonParam)
@@ -3280,7 +3310,7 @@ end
 
 function decZoneType(clickedObject, playerColor)
 
-	
+
 	if Player[playerColor].admin then
 		if options.zoneType > 1 then
 			options.zoneType = options.zoneType - 1
@@ -3314,7 +3344,7 @@ function incBackground(clickedObject, playerColor)
 end
 
 function changeBackground()
-	
+
     Backgrounds.setCustomURL(tblBackgrounds[options.background])
 
 
@@ -3471,71 +3501,100 @@ function discardButtonFlip(clickedObject, playerColor)
 	end
 end
 
+-- Expansion Content #220: This line may be related to an expansion because it mentions 'function expansionOptionEnabledSwapGov(clickedObject, playerColor)'. Review needed.
 function expansionOptionEnabledSwapGov(clickedObject, playerColor)
 	if Player[playerColor].admin then
+-- Expansion Content #219: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionEnabled, 1) == 1 then'. Review needed.
 		if bit32.band(options.expansionOptionEnabled, 1) == 1 then
+-- Expansion Content #218: This line may be related to an expansion because it mentions 'options.expansionOptionEnabled = options.expansionOptionEnabled - 1'. Review needed.
 			options.expansionOptionEnabled = options.expansionOptionEnabled - 1
 		else
+-- Expansion Content #217: This line may be related to an expansion because it mentions 'options.expansionOptionEnabled = options.expansionOptionEnabled + 1'. Review needed.
 			options.expansionOptionEnabled = options.expansionOptionEnabled + 1
 		end
+-- Expansion Content #216: This line may be related to an expansion because it mentions 'refreshExpansionButtons()'. Review needed.
 		refreshExpansionButtons()
 		settingsPannelMakeButtons()
 	end
 end
 
+-- Expansion Content #215: This line may be related to an expansion because it mentions 'function expansionOptionEnabledReverse(clickedObject, playerColor)'. Review needed.
 function expansionOptionEnabledReverse(clickedObject, playerColor)
 	if Player[playerColor].admin then
+-- Expansion Content #214: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionEnabled, 2) == 2 then'. Review needed.
 		if bit32.band(options.expansionOptionEnabled, 2) == 2 then
+-- Expansion Content #213: This line may be related to an expansion because it mentions 'options.expansionOptionEnabled = options.expansionOptionEnabled - 2'. Review needed.
 			options.expansionOptionEnabled = options.expansionOptionEnabled - 2
 		else
+-- Expansion Content #212: This line may be related to an expansion because it mentions 'options.expansionOptionEnabled = options.expansionOptionEnabled + 2'. Review needed.
 			options.expansionOptionEnabled = options.expansionOptionEnabled + 2
 		end
+-- Expansion Content #211: This line may be related to an expansion because it mentions 'refreshExpansionButtons()'. Review needed.
 		refreshExpansionButtons()
 		settingsPannelMakeButtons()
 	end
 end
 
+-- Expansion Content #210: This line may be related to an expansion because it mentions 'function expansionOptionEnabledSwapPower(clickedObject, playerColor)'. Review needed.
 function expansionOptionEnabledSwapPower(clickedObject, playerColor)
 	if Player[playerColor].admin then
+-- Expansion Content #209: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionEnabled, 4) == 4 then'. Review needed.
 		if bit32.band(options.expansionOptionEnabled, 4) == 4 then
+-- Expansion Content #208: This line may be related to an expansion because it mentions 'options.expansionOptionEnabled = options.expansionOptionEnabled - 4'. Review needed.
 			options.expansionOptionEnabled = options.expansionOptionEnabled - 4
 		else
+-- Expansion Content #207: This line may be related to an expansion because it mentions 'options.expansionOptionEnabled = options.expansionOptionEnabled + 4'. Review needed.
 			options.expansionOptionEnabled = options.expansionOptionEnabled + 4
 		end
 		settingsPannelMakeButtons()
 	end
 end
 
+-- Expansion Content #206: This line may be related to an expansion because it mentions 'function expansionOptionEnabledSetupPowerAbilities(clickedObject, playerColor)'. Review needed.
 function expansionOptionEnabledSetupPowerAbilities(clickedObject, playerColor)
     if Player[playerColor].admin then
+-- Expansion Content #205: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionEnabled, 8) == 8 then'. Review needed.
         if bit32.band(options.expansionOptionEnabled, 8) == 8 then
+-- Expansion Content #204: This line may be related to an expansion because it mentions 'options.expansionOptionEnabled = options.expansionOptionEnabled - 8'. Review needed.
             options.expansionOptionEnabled = options.expansionOptionEnabled - 8
         else
+-- Expansion Content #203: This line may be related to an expansion because it mentions 'options.expansionOptionEnabled = options.expansionOptionEnabled + 8'. Review needed.
             options.expansionOptionEnabled = options.expansionOptionEnabled + 8
         end
+-- Expansion Content #202: This line may be related to an expansion because it mentions 'refreshExpansionButtons()'. Review needed.
         refreshExpansionButtons()
         settingsPannelMakeButtons()
     end
 end
 
+-- Expansion Content #201: This line may be related to an expansion because it mentions 'function expansionOptionStatusSwapGov(clickedObject, playerColor)'. Review needed.
 function expansionOptionStatusSwapGov(clickedObject, playerColor)
 	if Player[playerColor].admin then
+-- Expansion Content #200: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionStatus, 1) == 1 then'. Review needed.
 		if bit32.band(options.expansionOptionStatus, 1) == 1 then
+-- Expansion Content #199: This line may be related to an expansion because it mentions 'options.expansionOptionStatus = options.expansionOptionStatus - 1'. Review needed.
 			options.expansionOptionStatus = options.expansionOptionStatus - 1
 		else
+-- Expansion Content #198: This line may be related to an expansion because it mentions 'options.expansionOptionStatus = options.expansionOptionStatus + 1'. Review needed.
 			options.expansionOptionStatus = options.expansionOptionStatus + 1
 		end
+-- Expansion Content #197: This line may be related to an expansion because it mentions 'refreshExpansionButtons()'. Review needed.
 		refreshExpansionButtons()
 	end
 end
 
+-- Expansion Content #196: This line may be related to an expansion because it mentions 'function expansionOptionStatusReverse(clickedObject, playerColor)'. Review needed.
 function expansionOptionStatusReverse(clickedObject, playerColor)
 	if Player[playerColor].admin then
+-- Expansion Content #195: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionStatus, 2) == 2 then'. Review needed.
 		if bit32.band(options.expansionOptionStatus, 2) == 2 then
+-- Expansion Content #194: This line may be related to an expansion because it mentions 'options.expansionOptionStatus = options.expansionOptionStatus - 2'. Review needed.
 			options.expansionOptionStatus = options.expansionOptionStatus - 2
 		else
+-- Expansion Content #193: This line may be related to an expansion because it mentions 'options.expansionOptionStatus = options.expansionOptionStatus + 2'. Review needed.
 			options.expansionOptionStatus = options.expansionOptionStatus + 2
 		end
+-- Expansion Content #192: This line may be related to an expansion because it mentions 'refreshExpansionButtons()'. Review needed.
 		refreshExpansionButtons()
 	end
 end
@@ -3667,18 +3726,24 @@ function incGreyCards(clickedObject, playerColor)
 	end
 end
 
+-- Expansion Content #191: This line may be related to an expansion because it mentions 'function decExpansionAmount(clickedObject, playerColor)'. Review needed.
 function decExpansionAmount(clickedObject, playerColor)
 	if Player[playerColor].admin then
+-- Expansion Content #190: This line may be related to an expansion because it mentions 'if options.expansionAmount > 0 then'. Review needed.
 		if options.expansionAmount > 0 then
+-- Expansion Content #189: This line may be related to an expansion because it mentions 'options.expansionAmount = options.expansionAmount - 1'. Review needed.
 			options.expansionAmount = options.expansionAmount - 1
 		end
 		settingsPannelMakeButtons()
 	end
 end
 
+-- Expansion Content #188: This line may be related to an expansion because it mentions 'function incExpansionAmount(clickedObject, playerColor)'. Review needed.
 function incExpansionAmount(clickedObject, playerColor)
 	if Player[playerColor].admin then
+-- Expansion Content #187: This line may be related to an expansion because it mentions 'if options.expansionAmount < 4 then'. Review needed.
 		if options.expansionAmount < 4 then
+-- Expansion Content #186: This line may be related to an expansion because it mentions 'options.expansionAmount = options.expansionAmount + 1'. Review needed.
 			options.expansionAmount = options.expansionAmount + 1
 		end
 		settingsPannelMakeButtons()
@@ -3748,12 +3813,12 @@ function displayBannerCardsCoroutine()
 		if not options.dealRoleCards then giveRoleCards() end
 
 
-		
+
 		--gameLength = os.time() - timeSinceStart
 		--gameLengthM = math.floor(gameLength/60)
 		--gameLengthS = math.floor(gameLength - (gameLengthM * 60))
         --unmuteAll()
-		
+
         --printToAll("Game Took " .. gameLengthM .. " Minutes " .. math.floor(gameLengthS) .. " Seconds")
 
 
@@ -3791,18 +3856,19 @@ end
 function unmuteAll()
     if not bolSilenced then return "" end
 
+-- Flag to indicate if silencing is active
     bolSilenced = false
 
 	for _,playerColor in ipairs(getSeatedPlayers()) do
 		tempSteamID = Player[playerColor].steam_id
 		if silenced[tempSteamID] ~= nil then Player[playerColor].mute() end
 	end
-	
+
 	for k in pairs(silenced) do
 		silenced[k] = nil
 	end
 
-	
+
 end
 
 
@@ -3839,11 +3905,13 @@ end
 
 function boardCardHandler(card)
 	local powerHolder = lastPres
+-- Expansion Content #185: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionEnabled, 4) == 4 and bit32.band(options.expansionOptionStatus, 1) == 1 then'. Review needed.
 	if bit32.band(options.expansionOptionEnabled, 4) == 4 and bit32.band(options.expansionOptionStatus, 1) == 1 then
 		powerHolder = lastChan
 	end
 	if powerHolder then
 		if isBoardCardInspect(card) then
+-- Expansion Content #184: This line may be related to an expansion because it mentions '--expansion'. Review needed.
 			--expansion
 			local abilitiesDeck = getDeckFromZoneByGUID(ABILITIESPILE_ZONE_GUID)
 			if abilitiesDeck then
@@ -3926,7 +3994,7 @@ function newDeckInspect()
 				cardsToInspect = cardsToInspect .. returnColor("Red") .. "F"
 			end
 			if i >= 3 then
-				return cardsToInspect 
+				return cardsToInspect
             end
         end
     end
@@ -3934,6 +4002,7 @@ end
 
 function nextPres(playerIn)
 	local nextList
+-- Expansion Content #183: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionStatus, 2) == 2 then'. Review needed.
 	if bit32.band(options.expansionOptionStatus, 2) == 2 then
 		nextList = {White = 'Maroon', Brown = 'White', Red = 'Brown', Orange = 'Red', Yellow = 'Orange', Green = 'Yellow', Teal = 'Green', Blue = 'Teal', Purple = 'Blue', Pink = 'Purple', Tan = 'Pink', Maroon = 'Tan'}
 	else
@@ -3965,14 +4034,16 @@ function movePlacards(playerIn, returnVoteCards)
     clearLastDrawn()
 	--clearDiscardButtons()
 
-	
+
 	local moveToPlayer = playerIn
 	if forcePres then
 		moveToPlayer = forcePres
 		forcePres = nil
 	end
 
+-- Expansion Content #182: This line may be related to an expansion because it mentions '--Expansion'. Review needed.
 	--Expansion
+-- Expansion Content #181: This line may be related to an expansion because it mentions 'expansionCounters()'. Review needed.
 	expansionCounters()
 
 	if options.scriptedVoting and returnVoteCards then
@@ -4021,19 +4092,20 @@ function markDead(tableIn)
 			bol5m = false
 			bol10m = false
 			bol15m = false
-			
-            if bulletInfo.shooterColor then 
+
+            if bulletInfo.shooterColor then
 				winLine = returnColor(bulletInfo.shooterColor) .. bulletInfo.shooterColor .. returnColor("White") .. " Shoots " .. returnColor(victimColor) .. victimColor
 			end
 
 			if options.omn1Rule then
+-- Flag to indicate if silencing is active
 				bolSilenced = true
 				if Player[victimColor].seated then Player[victimColor].mute() end
 				tempSteamId = Player[victimColor].steam_id
 				silenced[tempSteamId] = true
 			end
-			
-			if bulletVictims[1] == nil then 
+
+			if bulletVictims[1] == nil then
 				bulletVictims[1] = victimColor
 			else
 				bulletVictims[2] = victimColor
@@ -4080,7 +4152,7 @@ function markDead(tableIn)
 							noteTakerNotes[#noteTakerNotes].conflict = '(Conflict)'
 						end
 						--FIX THIS LINE
-						
+
 						local lineDrawer = getLineDrawer()
 						lineDrawer.executeScript(lineDrawerImportScript)
 						refreshNotes(clickedObject)
@@ -4241,10 +4313,10 @@ function homeTracker()
 	electionTrackerNichPos = {x = 1.41, y = 1.27525151, z = -9.385001}
 	electionTrackerMoveX = 2.7 --]]
 
-	
+
 	if trackerPos == 3 and options.autoDraw then
         --Auto Topdeck
-        topdeckCard() 
+        topdeckCard()
         if options.nicholasRule then
             trackerPos = 2
         else
@@ -4254,7 +4326,7 @@ function homeTracker()
 
     if trackerPos > 3 then broadcastToAll("Warning: " .. trackerPos .. " plays have been downvoted without a topdeck", stringColorToRGB("Red")) end
 
-		
+
 	newTrackerPos = vector(electionTrackerOrgPos.x + electionTrackerMoveX * trackerPos, electionTrackerOrgPos.y, electionTrackerOrgPos.z)
 
 	local tracker = getObjectFromGUID(ELECTION_TRACKER_GUID)
@@ -4323,6 +4395,7 @@ function policyCardCoroutine()
 		end
 	end
 
+-- Expansion Content #180: This line may be related to an expansion because it mentions '--Expansion'. Review needed.
 	--Expansion
 	tmpObj = getDeckFromZoneByGUID(ABILITIESPILE_ZONE_GUID)
 	if tmpObj then tmpObj.interactable = false end
@@ -4408,9 +4481,10 @@ function policyCardCoroutine()
                         elseif cardType == "L" then
                             winLine = returnColor("Blue") .. 'Topdeck: ' .. cardType
                         end
+-- Expansion Content #179: This line may be related to an expansion because it mentions 'elseif bit32.band(options.expansionOptionStatus, 1) == 1 then'. Review needed.
 					elseif bit32.band(options.expansionOptionStatus, 1) == 1 then
 						notateInfo(lastChan, '>', lastPres, '[0080F8]' .. cardType .. '[-]', false)
-						
+
 					else
 						notateInfo(lastPres, '>', lastChan, '[0080F8]' .. cardType .. '[-]', false)
 						winLine = returnColor(lastPres) .. lastPres .. returnColor("White") ..  ' > ' .. returnColor(lastChan) .. lastChan .. returnColor("White") .. ": "
@@ -4455,6 +4529,7 @@ function policyCardCoroutine()
                         elseif cardType == "L" then
                             winLine = returnColor("Blue") .. 'Topdeck: ' .. cardType
                         end
+-- Expansion Content #178: This line may be related to an expansion because it mentions 'elseif bit32.band(options.expansionOptionStatus, 1) == 1 then'. Review needed.
 					elseif bit32.band(options.expansionOptionStatus, 1) == 1 then
 						notateInfo(lastChan, '>', lastPres, '[FF0000]' .. cardType .. '[-]', false)
 					else
@@ -4502,7 +4577,7 @@ function policyCardCoroutine()
         bolTDShuffle = false
         homeTracker()
     end
-	
+
 	return true
 end
 
@@ -4666,9 +4741,9 @@ function broadcastLastVoter()
 		end
 	end
 
-	
+
 	if nonVoter then
-		if Player[nonVoter].seated then 
+		if Player[nonVoter].seated then
 			broadcastToColor("Everyone has voted except you", nonVoter, stringColorToRGB("Red"))
 		end
 		broadcastTimer = os.time()
@@ -4734,15 +4809,15 @@ function startVoteCheck()
 
 	if (#voteCards == getNumAlivePlayers() -1) then
 		if options.richardRule then
-			if tempRichard == -999 then 
-				tempRichard = os.time() 
+			if tempRichard == -999 then
+				tempRichard = os.time()
 				broadcastToAll("Handsome Richard Countdown Begins, " .. timerRichard .. " Seconds",stringColorToRGB("Purple"))
 			end
-			
+
 			richardRemaining = os.time() - tempRichard - timerRichard
-			
-			
-			
+
+
+
 			if richardRemaining < 0 then
 				--broadcastToAll('Voting in: ' .. tempRichard, stringColorToRGB('Green'))
 				voteDone = false
@@ -4764,12 +4839,12 @@ function startVoteCheck()
 	if (#voteCards < getNumAlivePlayers() and options.richardRule == false) then
 		voteDone = false
 	end
-	
-	
+
+
 		if voteDone then
-		
+
 			--resetVoteTimer()
-			
+
 
 			voteNotes = getFinalVoteString()
 			setNotes(voteNotes .. '\n\n' .. mainNotes)
@@ -4831,12 +4906,12 @@ function startVoteCheck()
 				end
 			end
 		end
-		if options.autoDraw and not bolNH and votePassed then 
+		if options.autoDraw and not bolNH and votePassed then
 			Wait.time(function()
-                drawThree("script","script") 
+                drawThree("script","script")
             end, drawDelay)
-            
-            
+
+
 			bolNH = false
 		end
 		if vetoPower and not bolNH and votePassed then createVetoButtons() end
@@ -4867,6 +4942,7 @@ function attemptLastVoteFixCo()
 	return 1
 end
 
+-- Expansion Content #177: This line may be related to an expansion because it mentions 'function expansionCounters()'. Review needed.
 function expansionCounters()
 	local allObjs = getAllObjects()
 	local tmpObj
@@ -4945,7 +5021,7 @@ function getFinalVoteString()
 	if neinCount == 0 then out = out .. 'None' end
 	out = out .. '[/i]'
 	if jaCount > neinCount then
-		
+
 		if bolRichard then
 			if timeOfPlayM == 0 then
 				broadcastToAll('Vote passes via Handsome Richard Rule (' .. timeOfPlayS .. " Seconds)", stringColorToRGB('Green'))
@@ -4953,7 +5029,7 @@ function getFinalVoteString()
 				broadcastToAll('Vote passes via Handsome Richard Rule (' .. timeOfPlayM .. " Minute " .. timeOfPlayS .. " Seconds)", stringColorToRGB('Green'))
 			else
 				broadcastToAll('Vote passes via Handsome Richard Rule (' .. timeOfPlayM .. " Minutes " .. timeOfPlayS .. " Seconds)", stringColorToRGB('Green'))
-			end	
+			end
 		else
 			if timeOfPlayM == 0 then
 				broadcastToAll('Vote passes (' .. timeOfPlayS .. " Seconds)", stringColorToRGB('Green'))
@@ -4962,11 +5038,11 @@ function getFinalVoteString()
 			else
 				broadcastToAll('Vote passes ('.. timeOfPlayM .. " Minutes " .. timeOfPlayS .. " Seconds)", stringColorToRGB('Green'))
 			end
-		end		
+		end
 		out = '[' .. stringColorToHex('Green') .. ']-<<<<· Vote passes <══¦-•\n' .. '[-]' .. out
-		
+
 	else
-		
+
 		if bolRichard then
 			if timeOfPlayM == 0 then
 				broadcastToAll('Vote fails via Handsome Richard Rule (' .. timeOfPlayS .. " Seconds)", stringColorToRGB('Red'))
@@ -4974,7 +5050,7 @@ function getFinalVoteString()
 				broadcastToAll('Vote fails via Handsome Richard Rule ('.. timeOfPlayM .. " Minute " .. timeOfPlayS .. " Seconds)", stringColorToRGB('Red'))
 			else
 				broadcastToAll('Vote fails via Handsome Richard Rule ('.. timeOfPlayM .. " Minutes " .. timeOfPlayS .. " Seconds)", stringColorToRGB('Red'))
-			end			
+			end
 		else
 			if timeOfPlayM == 0 then
 				broadcastToAll('Vote fails (' .. timeOfPlayS .. " Seconds)", stringColorToRGB('Red'))
@@ -4983,7 +5059,7 @@ function getFinalVoteString()
 			else
 				broadcastToAll('Vote fails ('.. timeOfPlayM .. " Minutes " .. timeOfPlayS .. " Seconds)", stringColorToRGB('Red'))
 			end
-		end		
+		end
 		out = '[' .. stringColorToHex('Red') .. ']-<<<<· Vote fails <══¦-•\n' .. '[-]' .. out
 		if options.autoNotate and recordDownvotes then
 			local lineSave = noteTakerCurrLine
@@ -4998,7 +5074,7 @@ function getFinalVoteString()
 			noteTakerNotes[noteTakerCurrLine].result = '[222222]Downvoted[-]'
 			noteTakerCurrLine = lineSave
 			refreshNotes(nil)
-		end		
+		end
 		trackerPos = trackerPos + 1
 		homeTracker()
 		movePlacards(nextPres(getPres()), false)
@@ -5047,8 +5123,8 @@ end
 
 function topdeckCard(clickedObject, playerColor)
 	if started then
-		if options.nicholasRule then 
-			--bolTD = true 
+		if options.nicholasRule then
+			--bolTD = true
 			trackerPos = 2
 		else
 			trackerPos = 0
@@ -5086,16 +5162,16 @@ function nextFascistSpot()
     local fascPanel = getObjectFromGUID(fasPannel_guid)
 
     nextZoneIndex = nil
-    
+
     for i, tmpZoneGuid in ipairs(fascist_zone_guids) do
-        if i > lastFascistPlayed then    
+        if i > lastFascistPlayed then
             bolNext = true
             tmpZone = getObjectFromGUID(fascist_zone_guids[i])
             inZone = tmpZone.getObjects()
             for k, j in ipairs(inZone) do
                 if isPolicyNotUsedCard(j) then bolNext = false end
             end
-            if bolNext then 
+            if bolNext then
                 nextZoneIndex = i
                 break
             end
@@ -5107,18 +5183,18 @@ end
 
 function nextLiberalSpot()
     local libPanel = getObjectFromGUID(libPanel_guid)
-    
+
     nextZoneIndex = nil
-    
+
     for i, tmpZoneGuid in ipairs(liberal_zone_guids) do
-        if i > lastLiberalPlayed then    
+        if i > lastLiberalPlayed then
             bolNext = true
             tmpZone = getObjectFromGUID(liberal_zone_guids[i])
             inZone = tmpZone.getObjects()
             for k, j in ipairs(inZone) do
                 if isPolicyNotUsedCard(j) then bolNext = false end
             end
-            if bolNext then 
+            if bolNext then
                 nextZoneIndex = i
                 break
             end
@@ -5134,6 +5210,7 @@ function drawThree(clickedObject, playerColor)
 	if started and playerColor ~= "script" then
 		local drawPlayer = getPres()
 		local drawPlayerText = 'president'
+-- Expansion Content #176: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionStatus, 1) == 1 then'. Review needed.
 		if bit32.band(options.expansionOptionStatus, 1) == 1 then
 			drawPlayer = getChan()
 			drawPlayerText = 'chancellor'
@@ -5216,8 +5293,10 @@ function drawCards(amount, playerColor)
 				drawDeck.deal(amount, playerColor)
 			end
 			if amount == 1 then
+-- Expansion Content #175: This line may be related to an expansion because it mentions 'broadcastToAll('Dealing 1 card to ' .. playerColor .. '.', stringColorToRGBExtra(playerColor))'. Review needed.
 				broadcastToAll('Dealing 1 card to ' .. playerColor .. '.', stringColorToRGBExtra(playerColor))
 			else
+-- Expansion Content #174: This line may be related to an expansion because it mentions 'broadcastToAll('Dealing ' .. amount .. ' cards to ' .. playerColor .. '.', stringColorToRGBExtra(playerColor))'. Review needed.
 				broadcastToAll('Dealing ' .. amount .. ' cards to ' .. playerColor .. '.', stringColorToRGBExtra(playerColor))
 			end
 		else
@@ -5245,8 +5324,8 @@ function discardFascistCardPres()
 				cardsPassed[i] = tmpCard
 			else
 				cardDiscarded = true
-				if discardDeck then 
-					discardDeck.putObject(tmpCard) 
+				if discardDeck then
+					discardDeck.putObject(tmpCard)
 				else
 					tmpCard.setPosition(discardZonePos)
 					tmpCard.setRotation({0, 180, 180})
@@ -5273,8 +5352,8 @@ function discardLiberalCardPres()
 				cardsPassed[i] = tmpCard
 			else
 				cardDiscarded = true
-				if discardDeck then 
-					discardDeck.putObject(tmpCard) 
+				if discardDeck then
+					discardDeck.putObject(tmpCard)
 				else
 					tmpCard.setPosition(discardZonePos)
 					tmpCard.setRotation({0, 180, 180})
@@ -5303,8 +5382,8 @@ function discardLiberalCardChan()
 				obj.setPosition(tempPos)
 				obj.setRotation({0, 180, 0})
 			else
-				if discardDeck then 
-					discardDeck.putObject(obj) 
+				if discardDeck then
+					discardDeck.putObject(obj)
 				else
 					obj.setPosition(discardZonePos)
 					obj.setRotation({0, 180, 180})
@@ -5337,8 +5416,8 @@ function discardFascistCardChan()
 				obj.setPosition(tempPos)
 				obj.setRotation({0, 180, 0})
 			else
-				if discardDeck then 
-					discardDeck.putObject(obj) 
+				if discardDeck then
+					discardDeck.putObject(obj)
 				else
 					obj.setPosition(discardZonePos)
 					obj.setRotation({0, 180, 180})
@@ -5382,7 +5461,7 @@ function countHand(playerColor, bolPres)
         for i, obj in ipairs(cardsLastDrawn) do
             tmpCard = getObjectFromGUID(obj)
             for k, card in ipairs(Player[playerColor].getHandObjects()) do
-                if card == tmpCard then 
+                if card == tmpCard then
                     iCounter = iCounter + 1
                 end
             end
@@ -5450,7 +5529,7 @@ function discardButtonClicked(clickedObject, playerColor)
 
 
 	if playerColor == getPres() then
-        
+
         if bolPresClicked then
             printToColor("IDIOT: You already discarded.", playerColor, "Red")
         else
@@ -5465,7 +5544,7 @@ function discardButtonClicked(clickedObject, playerColor)
 						cardsPassed[i] = tmpCard
 					end
 				end
-				
+
 				addGetDraws(cardsLastDrawn, cardsPassed)
 
             else
@@ -5488,7 +5567,7 @@ function discardButtonClicked(clickedObject, playerColor)
                         end
                         if tmpCard == obj then bolFound = true end
                     end
-                    if not bolFound and tmpCard then 
+                    if not bolFound and tmpCard then
                         discardCard(tmpCard)
                     end
                 end
@@ -5517,8 +5596,8 @@ function discardCard(cardIn)
     local discardZonePos = getObjectFromGUID(DISCARD_ZONE_GUID).getPosition()
 	local discardDeck = getDeckFromZoneByGUID(DISCARD_ZONE_GUID)
 
-    if discardDeck then 
-        discardDeck.putObject(cardIn) 
+    if discardDeck then
+        discardDeck.putObject(cardIn)
     else
         cardIn.setPosition(discardZonePos)
         cardIn.setRotation({0, 180, 180})
@@ -5563,7 +5642,7 @@ function createPresButtons()
 	if tmpFasc then UI.setAttribute("discardFascPres", "visibility", getPres()) end
 	if tmpLib then UI.setAttribute("discardLibPres", "visibility", getPres()) end
 
-	
+
 
 end
 
@@ -5588,10 +5667,10 @@ function createChanButtons()
 end
 
 function clearDiscardButtons()
-	UI.setAttribute("discardFascPres", "visibility", " ") 
-	UI.setAttribute("discardLibPres", "visibility", " ") 
-	UI.setAttribute("discardFascChan", "visibility", " ") 
-	UI.setAttribute("discardLibChan", "visibility", " ") 
+	UI.setAttribute("discardFascPres", "visibility", " ")
+	UI.setAttribute("discardLibPres", "visibility", " ")
+	UI.setAttribute("discardFascChan", "visibility", " ")
+	UI.setAttribute("discardLibChan", "visibility", " ")
 
 end
 
@@ -5635,6 +5714,7 @@ function onPlayerChangeColor(color)
 			Player[color]:print(chatHelp(Player[color].admin))
 		elseif color == 'Black' then
 			printToAll('--------------------------------------', {1, 1, 1})
+-- Expansion Content #173: This line may be related to an expansion because it mentions 'local hcol = stringColorToRGBExtra(color)'. Review needed.
 			local hcol = stringColorToRGBExtra(color)
 			printToAll('All hail the omniscient Black player ' .. Player[color].steam_name, {hcol['r'], hcol['g'], hcol['b']})
 			printToAll('--------------------------------------', {1, 1, 1})
@@ -5696,7 +5776,7 @@ end
 function setupCoroutine()
 	--Get seated players
 	players = getSeatedPlayers()
-    
+
 	if #players < tonumber(minPlayers) then
 		printToAll('Not enough players!', {1,1,1})
 		avoidDoubleStart = false
@@ -5709,12 +5789,13 @@ function setupCoroutine()
 		return true
 	end
 
-	
-	
+
+
 	makeRulesTextBox()
 
 	getObjectFromGUID("303db7").Clock.startStopwatch()
 	getObjectFromGUID("68faa0").Clock.startStopwatch()
+-- Tracks the time elapsed since the start of the game
 	timeSinceStart = os.time()
 	timeSinceUV = os.time()
 	bolRichard = false
@@ -5805,6 +5886,7 @@ function setupCoroutine()
 				table.insert(players, 1, color)
 				local buttonStatusBase = spawnObject(paramsStatus)
 				buttonStatusBase.setName(color)
+-- Expansion Content #172: This line may be related to an expansion because it mentions 'buttonStatusBase.setColorTint(stringColorToRGBExtra(color))'. Review needed.
 				buttonStatusBase.setColorTint(stringColorToRGBExtra(color))
 				buttonStatusBase.setRotation({0, 180, 0})
 				buttonStatusBase.setLock(true)
@@ -5815,23 +5897,28 @@ function setupCoroutine()
 		end
 	end
 
+-- Expansion Content #171: This line may be related to an expansion because it mentions '--Expansion'. Review needed.
 	--Expansion
 	local abilitiesDeck = getDeckFromZoneByGUID(ABILITIESPILE_ZONE_GUID)
 	if abilitiesDeck then
 		abilitiesDeck.randomize()
 		for _, player in pairs(players) do
 			if greyPlayer(player) then
+-- Expansion Content #170: This line may be related to an expansion because it mentions 'for i = 1, options.expansionAmount, 1 do'. Review needed.
 				for i = 1, options.expansionAmount, 1 do
 					local params = {}
 					local card = abilitiesDeck.takeObject(params)
 					if card then
+-- Expansion Content #169: This line may be related to an expansion because it mentions 'giveObjectToPlayer(card, player, {forward = GREY_FORWARD, right = GREY_EXPANSION_RIGHT, up = GREY_UP}, FACE_DOWN_ROT, false, true)'. Review needed.
 						giveObjectToPlayer(card, player, {forward = GREY_FORWARD, right = GREY_EXPANSION_RIGHT, up = GREY_UP}, FACE_DOWN_ROT, false, true)
 					end
 				end
 			else
+-- Expansion Content #168: This line may be related to an expansion because it mentions 'abilitiesDeck.deal(options.expansionAmount, player)'. Review needed.
 				abilitiesDeck.deal(options.expansionAmount, player)
 			end
 		end
+-- Expansion Content #167: This line may be related to an expansion because it mentions 'if bit32.band(options.expansionOptionEnabled, 8) == 8 then'. Review needed.
 		if bit32.band(options.expansionOptionEnabled, 8) == 8 then
 			Wait.frames(function() setupPowerAbilities(abilitiesDeck) end, 2)
 		end
@@ -6027,6 +6114,7 @@ function setupCoroutine()
 	-- Move and tell first pres
 	giveObjectToPlayer(president, players[randomPlayer], {forward = 11, right = 0, up = 0, forceHeight = 3}, NO_ROT)
 	giveObjectToPlayer(chancelor, players[randomPlayer], {forward = 11, right = 0, up = 0, forceHeight = 5.5}, NO_ROT)
+-- Expansion Content #166: This line may be related to an expansion because it mentions 'local hcol = stringColorToRGBExtra(players[randomPlayer])'. Review needed.
 	local hcol = stringColorToRGBExtra(players[randomPlayer])
 	printToAll(players[randomPlayer] .. ' is first president!', hcol)
 	printToAll('--------------------------------------', {1,1,1})
@@ -6087,10 +6175,10 @@ function setupCoroutine()
 	txtFascists = returnColor("Red") .. "Fascists: "
 	txtHitler = returnColor("Red") .. "Hitler: "
 	txtLiberals = returnColor("Blue") .. "Liberals: "
-	
-	
+
+
 	for _,playerColor in ipairs(Player.getColors()) do
-	
+
 		if roles[playerColor] == 'fascist' then
 			txtFascists = txtFascists .. returnColor(playerColor) .. playerColor .. " "
 		elseif roles[playerColor] == 'hitler' then
@@ -6098,7 +6186,7 @@ function setupCoroutine()
 		elseif roles[playerColor] == 'liberal' then
 			txtLiberals = txtLiberals .. returnColor(playerColor) .. playerColor .. " "
 		end
-	
+
 	end
 	txtAllRoles = txtHitler .. "\n" .. txtFascists .. "\n" .. txtLiberals
 
@@ -6184,7 +6272,7 @@ function changePlayerStatus(clickedObject, playerColor, rightClicked)
 
 
 	if Player[playerColor].admin then
-		
+
         if not rightClicked then
             if _G.playerStatus[ownerColor] == 1 then
                 _G.playerStatus[ownerColor] = 0
@@ -6294,6 +6382,7 @@ function toggleSecurityCoroutine()
 	elseif (currentlyDisabled) then
 		broadcastToAll('WARNING: Security has been enabled!', {1,0,0})
 
+-- Expansion Content #165: This line may be related to an expansion because it mentions '--Expansion'. Review needed.
 		--Expansion
 		tmpObj = getDeckFromZoneByGUID(ABILITIESPILE_ZONE_GUID)
 		if tmpObj then tmpObj.interactable = false end
@@ -6320,6 +6409,7 @@ function disableSecurityCoroutine()
 	end
 	sleep(30)
 
+-- Expansion Content #164: This line may be related to an expansion because it mentions '--Expansion'. Review needed.
 	--Expansion
 	tmpObj = getDeckFromZoneByGUID(ABILITIESPILE_ZONE_GUID)
 	if tmpObj then tmpObj.interactable = false end
@@ -6340,8 +6430,8 @@ function createVetoButtons(curChancellor, curPresident)
 	--FIX THIS
 	--[[ vChancellor = getChan()
 	vPresident = getPres() --]]
-	
-	
+
+
 
     if curChancellor then
         createVetoButton(curChancellor, 18,1)
@@ -6373,15 +6463,15 @@ function createVetoButtons(curChancellor, curPresident)
 end
 
 function createVetoButton(playerColor)
-	
+
 	local membershipCard = getObjectFromGUID(fakeMembership_card_guid)
-	
-    
+
+
 
     rot = getObjectFromGUID(ROLE_ZONE_GUIDS[playerColor]).getRotation()
 	pos = getObjectFromGUID(ROLE_ZONE_GUIDS[playerColor]).getPosition()
     local params = {position = pos, rotation = {rot.x, rot.y + 180, rot.z}, sound = false}
-	
+
 	card = membershipCard.clone(params)
     card.locked = true
     card.interactable = false
@@ -6401,9 +6491,9 @@ function createVetoButton(playerColor)
                 height = 1500,
                 font_size = 150
                 }
-			self.createButton(button)  
+			self.createButton(button)
 		end
-		
+
 		function vetoClicked(obj, color, alt_click)
 			if color == playerColor then
 				Global.call('playerVetod')
@@ -6420,7 +6510,7 @@ end
 
 
 function playerVetod(playerColor)
-	
+
     local cardLists = {}
 
 
@@ -6428,7 +6518,7 @@ function playerVetod(playerColor)
 		vetoCounter = 1
 	else
 		--broadcastToAll("Both Players have agreed to Veto, please discard all policies before the next play", stringColorToRGB("Blue"))
-		
+
         --local discardZonePos = getObjectFromGUID(DISCARD_ZONE_GUID).getPosition()
 
 
@@ -6440,9 +6530,9 @@ function playerVetod(playerColor)
         local zone = getObjectFromGUID(HAND_ZONE_GUIDSc[lastPres])
 		local inZone = zone.getObjects()
 		for i, obj in ipairs(inZone) do
-			if string.find(obj.getDescription(),"Policy") then 
-                if discardDeck then 
-                    discardDeck.putObject(obj) 
+			if string.find(obj.getDescription(),"Policy") then
+                if discardDeck then
+                    discardDeck.putObject(obj)
                 else
                     obj.setPosition(discardZonePos)
 				    obj.setRotation({0, 180, 180})
@@ -6454,9 +6544,9 @@ function playerVetod(playerColor)
         local zone = getObjectFromGUID(HAND_ZONE_GUIDSc[lastChan])
 		local inZone = zone.getObjects()
 		for i, obj in ipairs(inZone) do
-			if string.find(obj.getDescription(),"Policy") then 
-                if discardDeck then 
-                    discardDeck.putObject(obj) 
+			if string.find(obj.getDescription(),"Policy") then
+                if discardDeck then
+                    discardDeck.putObject(obj)
                 else
                     obj.setPosition(discardZonePos)
 				    obj.setRotation({0, 180, 180})
@@ -6479,16 +6569,16 @@ function playerVetod(playerColor)
 
         cardLists = getPolicyCardStatus(true)
         if #cardLists.drawList < 3 and trackerPos >= 2 then
-           
+
            bolTDShuffle = true
         else
             homeTracker()
-        
+
         end
 
 
-		
-		
+
+
 		if lastPres and lastChan then
 			local tmpPres = getObjectFromGUID(PREV_PRESIDENT_GUID)
 			if tmpPres then giveObjectToPlayer(tmpPres, lastPres, {forward = 11, right = 0, up = 0, forceHeight = 1.1}, NO_ROT, false, false) end
@@ -6504,7 +6594,7 @@ function playerVetod(playerColor)
 		notateInfo(lastPres, '>', lastChan, '[FF0000]' .. 'Veto!' .. '[-]', false)
 		destroyVetoCards()
 		vetoCounter = 0
-		
+
 	end
 end
 
@@ -6579,6 +6669,7 @@ end
 function playerInspected(clickedObject, inspectorColor, checkedColor)
 	if inspectorColor == activePowerColor and needInspect() then
 		local role = roles[checkedColor]
+-- Expansion Content #163: This line may be related to an expansion because it mentions 'local playerColor = stringColorToRGBExtra(checkedColor)'. Review needed.
 		local playerColor = stringColorToRGBExtra(checkedColor)
 		local roleText
 		local roleColor
@@ -6589,7 +6680,7 @@ function playerInspected(clickedObject, inspectorColor, checkedColor)
 			roleText = text.liberalArticle .. ' ' .. string.lower(text.liberal)
 			roleColor = {0.1, 0.3, 1}
 		end
-		
+
 
 
 		timeOfPlay = os.time()-timeSinceUV
@@ -6607,7 +6698,7 @@ function playerInspected(clickedObject, inspectorColor, checkedColor)
 		smartBroadcastToColor(checkedColor .. ' is ' .. roleText .. '!', inspectorColor, roleColor)
 		table.insert(inspected, 1, checkedColor)
 		removeInspect()
-		
+
 		timeSinceUV = os.time()
 		getObjectFromGUID("303db7").Clock.startStopwatch()
 		getObjectFromGUID("68faa0").Clock.startStopwatch()
@@ -6706,7 +6797,7 @@ end
 
 function giveRoleCardsCo()
     local curGUIDS = {}
-    if bolRoles then 
+    if bolRoles then
         curGUIDS = HAND_ZONE_GUIDSc
     else
         curGUIDS = ROLE_ZONE_GUIDS
@@ -6735,7 +6826,7 @@ function giveRoleCardsCo()
 
 		for i, color in pairs(colours) do
 			if (roles[color] ~= nil) then
-                
+
 				if (roles[color] == 'hitler') then
 					hitCard.setDescription("Hitler Role Card")
                     hitCard.setPositionSmooth(getObjectFromGUID(curGUIDS[color]).getPosition(), false, true)
@@ -6780,7 +6871,7 @@ function lockAndMoveUp(cardIn, color)
 
 	cardIn.setRotation(handRot[color])
 
-	cardIn.locked = true	
+	cardIn.locked = true
 	pos_target = cardIn.getTransformForward()
 	pos_current = cardIn.getPosition()
 		pos = {
@@ -6789,7 +6880,7 @@ function lockAndMoveUp(cardIn, color)
 			z = pos_current.z + pos_target.z*15,
 		}
 	cardIn.setPositionSmooth(pos, false)
-	
+
 end
 
 
@@ -7799,6 +7890,7 @@ function printPolicyCards12P(mode, playerColor)
 	local player = getPlayerObj(playerColor)
 	local zoneObjs = {}
 	local policyCardStr = ""
+-- Expansion Content #162: This line may be related to an expansion because it mentions 'local expansionCardStr = "Your other cards are:"'. Review needed.
 	local expansionCardStr = "Your other cards are:"
 	local outStr = ""
 
@@ -7810,6 +7902,7 @@ function printPolicyCards12P(mode, playerColor)
 			elseif v.description == "Fascist Policy" then
 				policyCardStr = policyCardStr .. "[FF0000]F[-]"
 			elseif not (string.match(v.description, "Ja Card") or string.match(v.description, "Nein Card")) then
+-- Expansion Content #161: This line may be related to an expansion because it mentions 'expansionCardStr = expansionCardStr .. "\n" .. v.name'. Review needed.
 				expansionCardStr = expansionCardStr .. "\n" .. v.name
 			end
 		end
@@ -7822,9 +7915,11 @@ function printPolicyCards12P(mode, playerColor)
 				outStr = "Your policy cards are:" .. policyCardStr .. "\n"
 			end
 		end
+-- Expansion Content #160: This line may be related to an expansion because it mentions 'if expansionCardStr == "Your other cards are:" or mode == "Draw" then'. Review needed.
 		if expansionCardStr == "Your other cards are:" or mode == "Draw" then
 			bigBroadcast(outStr, player)
 		else
+-- Expansion Content #159: This line may be related to an expansion because it mentions 'bigBroadcast(outStr .. expansionCardStr, player)'. Review needed.
 			bigBroadcast(outStr .. expansionCardStr, player)
 		end
 	end
@@ -8786,6 +8881,7 @@ function setupBoard(selfIn)
 	end
 	local playerNT = selfIn.getVar('playerNoteTaker')
 	local imagename = setupBoardGetFunction(playerIn) .. colorOffset[playerNT]
+-- Expansion Content #158: This line may be related to an expansion because it mentions 'if colorMatch then selfIn.setColorTint(stringColorToRGBExtra(playerNT)) end'. Review needed.
 	if colorMatch then selfIn.setColorTint(stringColorToRGBExtra(playerNT)) end
 	forceObjectToPlayer(selfIn, playerNT, {forward = giveForward, right = rightOffset[playerNT], up = 0, forceHeight = giveHeight}, {x = rotZ, y = 180 - rotZ, z = 0})
 	selfIn.setLock(true)
@@ -8980,6 +9076,7 @@ function initHorizontal(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 4, posY, (-2.25 * posZscale) + posZoffsetColors}
+-- Expansion Content #157: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -8988,6 +9085,7 @@ function initHorizontal(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 0, posY, (-2.25 * posZscale) + posZoffsetColors}
+-- Expansion Content #156: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -8996,6 +9094,7 @@ function initHorizontal(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -4, posY, (-2.25 * posZscale) + posZoffsetColors}
+-- Expansion Content #155: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9004,6 +9103,7 @@ function initHorizontal(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -6, posY, (-3.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #154: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9012,6 +9112,7 @@ function initHorizontal(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -6, posY, (-5.25 * posZscale) + posZoffsetColors}
+-- Expansion Content #153: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9020,6 +9121,7 @@ function initHorizontal(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -4, posY, (-6.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #152: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9028,6 +9130,7 @@ function initHorizontal(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 0, posY, (-6.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #151: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9036,6 +9139,7 @@ function initHorizontal(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 4, posY, (-6.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #150: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9044,6 +9148,7 @@ function initHorizontal(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 6, posY, (-5.25 * posZscale) + posZoffsetColors}
+-- Expansion Content #149: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9052,6 +9157,7 @@ function initHorizontal(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 6, posY, (-3.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #148: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9073,6 +9179,7 @@ function initVertical(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 6, posY, (-6.0 * posZscale) + posZoffsetColors}
+-- Expansion Content #147: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9081,6 +9188,7 @@ function initVertical(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 6, posY, (-4.5 * posZscale) + posZoffsetColors}
+-- Expansion Content #146: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9089,6 +9197,7 @@ function initVertical(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 6, posY, (-3.0 * posZscale) + posZoffsetColors}
+-- Expansion Content #145: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9097,6 +9206,7 @@ function initVertical(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 2, posY, (-2.25 * posZscale) + posZoffsetColors}
+-- Expansion Content #144: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9105,6 +9215,7 @@ function initVertical(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -2, posY, (-2.25 * posZscale) + posZoffsetColors}
+-- Expansion Content #143: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9113,6 +9224,7 @@ function initVertical(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -6, posY, (-3.0 * posZscale) + posZoffsetColors}
+-- Expansion Content #142: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9121,6 +9233,7 @@ function initVertical(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -6, posY, (-4.5 * posZscale) + posZoffsetColors}
+-- Expansion Content #141: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9129,6 +9242,7 @@ function initVertical(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -6, posY, (-6.0 * posZscale) + posZoffsetColors}
+-- Expansion Content #140: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9137,6 +9251,7 @@ function initVertical(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -2, posY, (-6.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #139: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9145,6 +9260,7 @@ function initVertical(selfIn, offset)
 	buttonParam.click_function = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.label = MAIN_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 2, posY, (-6.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #138: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(MAIN_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9166,6 +9282,7 @@ function init12Player(selfIn, offset)
 	buttonParam.click_function = ALL_PLAYABLE_COLORS[color]
 	buttonParam.label = ALL_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 4, posY, (-1.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #137: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9174,6 +9291,7 @@ function init12Player(selfIn, offset)
 	buttonParam.click_function = ALL_PLAYABLE_COLORS[color]
 	buttonParam.label = ALL_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 0, posY, (-1.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #136: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9182,6 +9300,7 @@ function init12Player(selfIn, offset)
 	buttonParam.click_function = ALL_PLAYABLE_COLORS[color]
 	buttonParam.label = ALL_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -4, posY, (-1.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #135: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9190,6 +9309,7 @@ function init12Player(selfIn, offset)
 	buttonParam.click_function = ALL_PLAYABLE_COLORS[color]
 	buttonParam.label = ALL_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -6, posY, (-3.25 * posZscale) + posZoffsetColors}
+-- Expansion Content #134: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9198,6 +9318,7 @@ function init12Player(selfIn, offset)
 	buttonParam.click_function = ALL_PLAYABLE_COLORS[color]
 	buttonParam.label = ALL_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -6, posY, (-4.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #133: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9206,6 +9327,7 @@ function init12Player(selfIn, offset)
 	buttonParam.click_function = ALL_PLAYABLE_COLORS[color]
 	buttonParam.label = ALL_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -6, posY, (-6.25 * posZscale) + posZoffsetColors}
+-- Expansion Content #132: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9214,6 +9336,7 @@ function init12Player(selfIn, offset)
 	buttonParam.click_function = ALL_PLAYABLE_COLORS[color]
 	buttonParam.label = ALL_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * -4, posY, (-7.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #131: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9222,6 +9345,7 @@ function init12Player(selfIn, offset)
 	buttonParam.click_function = ALL_PLAYABLE_COLORS[color]
 	buttonParam.label = ALL_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 0, posY, (-7.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #130: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9230,6 +9354,7 @@ function init12Player(selfIn, offset)
 	buttonParam.click_function = ALL_PLAYABLE_COLORS[color]
 	buttonParam.label = ALL_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 4, posY, (-7.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #129: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9238,6 +9363,7 @@ function init12Player(selfIn, offset)
 	buttonParam.click_function = ALL_PLAYABLE_COLORS[color]
 	buttonParam.label = ALL_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 6, posY, (-6.25 * posZscale) + posZoffsetColors}
+-- Expansion Content #128: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9246,6 +9372,7 @@ function init12Player(selfIn, offset)
 	buttonParam.click_function = ALL_PLAYABLE_COLORS[color]
 	buttonParam.label = ALL_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 6, posY, (-4.75 * posZscale) + posZoffsetColors}
+-- Expansion Content #127: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -9254,6 +9381,7 @@ function init12Player(selfIn, offset)
 	buttonParam.click_function = ALL_PLAYABLE_COLORS[color]
 	buttonParam.label = ALL_PLAYABLE_COLORS[color]
 	buttonParam.position = {posXscale * 6, posY, (-3.25 * posZscale) + posZoffsetColors}
+-- Expansion Content #126: This line may be related to an expansion because it mentions 'buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])'. Review needed.
 	buttonParam.color = stringColorToRGBExtra(ALL_PLAYABLE_COLORS[color])
 	selfIn.createButton(buttonParam)
 
@@ -10641,9 +10769,11 @@ function rgbToHex(c)
 end
 
 function stringColorToHex(color)
+-- Expansion Content #125: This line may be related to an expansion because it mentions 'return rgbToHex(stringColorToRGBExtra(color))'. Review needed.
 	return rgbToHex(stringColorToRGBExtra(color))
 end
 
+-- Expansion Content #124: This line may be related to an expansion because it mentions 'function stringColorToRGBExtra(color)'. Review needed.
 function stringColorToRGBExtra(color)
 	if greyPlayer(color) then
 		return GREY_PLAYABLE_COLORS_RGB[color]
@@ -10944,23 +11074,54 @@ function getLineDrawer()
 	end
 end
 
--- Declare 'toggleCount' outside the function to maintain its state between calls
-local toggleCount = 0
-function togglePanel()
-    local panelID = 'Enigma_Engine_ON'
-	local panelIDoff = 'Enigma_Engine_OFF'
+-- Table to maintain toggle state for each player 
+local playerToggleState = {}
 
-    if toggleCount == 0 then
-        -- Hide the panel
-        self.UI.hide(panelID)
-		self.UI.show(panelIDoff)
-        toggleCount = 1
-    else
-        -- Show the panel
-		self.UI.hide(panelIDoff)
-        self.UI.show(panelID)
-        toggleCount = 0
+function togglePanel(player)
+    -- Toggle the state for the specific player
+    playerToggleState[player.color] = not playerToggleState[player.color]
+
+    -- Update the UI based on the new state
+    updateEnigmaEngineUI()
+end
+
+function updateEnigmaEngineUI() -- Thanks to @55tremine for fixing function
+    local showStr_ON = ""
+    local showStr_OFF = ""
+
+    for _, color in ipairs(MAIN_PLAYABLE_COLORS) do
+        if playerToggleState[color] then
+            -- Player has the panel ON
+            if showStr_ON == "" then
+                showStr_ON = showStr_ON .. color
+            else
+                showStr_ON = showStr_ON .. "|" .. color
+            end
+        else
+            -- Player has the panel OFF
+            if showStr_OFF == "" then
+                showStr_OFF = showStr_OFF .. color
+            else
+                showStr_OFF = showStr_OFF .. "|" .. color
+            end
+        end
     end
+
+    -- Update the visibility of the ON and OFF panels
+    if showStr_ON == "" then
+        UI.setAttribute('Enigma_Engine_ON', 'active', "false")
+    else
+        UI.setAttribute('Enigma_Engine_ON', 'active', "true")
+        UI.setAttribute('Enigma_Engine_ON', 'visibility', showStr_ON)
+    end
+    
+    if showStr_OFF == "" then
+        UI.setAttribute('Enigma_Engine_OFF', 'active', "false")
+    else
+        UI.setAttribute('Enigma_Engine_OFF', 'active', "true")
+        UI.setAttribute('Enigma_Engine_OFF', 'visibility', showStr_OFF)
+    end
+
 end
 
 ----#include \SecretHitlerCE\common.ttslua
