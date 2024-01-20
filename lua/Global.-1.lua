@@ -11091,18 +11091,18 @@ function updateEnigmaEngineUI() -- Thanks to @55tremine for fixing function
 
     for _, color in ipairs(MAIN_PLAYABLE_COLORS) do
         if playerToggleState[color] then
-            -- Player has the panel ON
-            if showStr_ON == "" then
-                showStr_ON = showStr_ON .. color
-            else
-                showStr_ON = showStr_ON .. "|" .. color
-            end
-        else
             -- Player has the panel OFF
             if showStr_OFF == "" then
                 showStr_OFF = showStr_OFF .. color
             else
                 showStr_OFF = showStr_OFF .. "|" .. color
+            end
+        else
+            -- Player has the panel ON
+            if showStr_ON == "" then
+                showStr_ON = showStr_ON .. color
+            else
+                showStr_ON = showStr_ON .. "|" .. color
             end
         end
     end
