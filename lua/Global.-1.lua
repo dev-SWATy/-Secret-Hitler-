@@ -2011,7 +2011,7 @@ options = {
 
 	autoNotHitler = true,
 	autoDrawConflicts = true,
-	tylerConflict = true,
+	tylerConflict = false,
 	allowGetDraws = true,
     autoGetDraws = true,
     beepEnabled = false,
@@ -5438,16 +5438,17 @@ function createCardButton()
 		height = 320,
 		position = {0, 1, 0.3},
 		rotation = {0, 0, 0},
-		click_function = "discardButtonClicked",
+		click_function = "discardFirstClick",
 		label = "Discard",
 		font_size = 270,
-		font_color = {255/255, 128/255, 0/255, 255/255},
+		font_color = {1, 1, 1, 1},
 		color = {0/255, 0/255, 0/255, 255/255},
 		function_owner = nil,
 	}
 
 	for i, obj in ipairs(cardsLastDrawn) do
 		tmpCard = getObjectFromGUID(obj)
+		tmpCard.clearButtons()
 		tmpCard.createButton(buttonParam)
 	end
 
@@ -5476,7 +5477,7 @@ function countHand(playerColor, bolPres)
                 end
             end
         end
-
+		addGetDraws(cardsPassed)
     end
     return iCounter
 
@@ -5508,22 +5509,112 @@ function isDiscarded(cardIn)
 
 end
 
-function addGetDraws(drawnCards, passedCards)
+function addGetDraws(passedCards)
 
---[[ 	local drawLogArr = {}
-	for i = 1, 5 do
-		table.insert(drawLogArr, drawLog[#drawLog][i])
-	end --]]
 
 	for i, obj in pairs(passedCards) do
 		table.insert(drawLog[#drawLog], shortenDesc(obj.getDescription()))
 	end
---[[ 	table.remove(drawLog,#drawLog)
-	table.insert(drawLog,drawLogArr) --]]
 
 end
 
-function discardButtonClicked(clickedObject, playerColor)
+function discardFirstClick(clickedObject, playerColor, altClick)
+	
+	if altClick and (playerColor == getPres() or playerColor == getChan()) then
+        if playerColor == getPres() then createCardButton() end
+		discardButtonClicked(clickedObject, playerColor)
+		
+	else
+
+		local buttonParam = {
+			rotation = {0, 0, 0},
+			font_size = 270,
+			color = {0/255, 0/255, 0/255, 255/255},
+			function_owner = nil
+		}
+
+		if playerColor == getPres() then
+			if bolPresClicked then
+				printToColor("IDIOT: You already discarded.", playerColor, "Red")
+			else
+				if countHand(playerColor, true) == 3 then
+					for i, obj in ipairs(cardsLastDrawn) do
+						tmpCard = getObjectFromGUID(obj)
+						tmpCard.clearButtons()
+						if tmpCard == clickedObject then
+							buttonParam.position = {0, 1, 0.3}
+							buttonParam.width = 900
+							buttonParam.height = 320
+							buttonParam.label = "Sure?"
+							buttonParam.color = {0.224, 1.0, 0.078, 1}
+							buttonParam.font_color = {1, 1, 1, 1}
+							buttonParam.click_function = "discardButtonClicked"
+							buttonParam.tooltip = "Note: Right click to skip confirmation"
+						else
+							buttonParam.position = {0, 1, 0.3}
+							buttonParam.width = 900
+							buttonParam.height = 320
+							buttonParam.label = "Discard"
+							buttonParam.color = {0/255, 0/255, 0/255, 255/255}
+							buttonParam.font_color = {1, 1, 1, 1}
+							buttonParam.click_function = "discardFirstClick"
+						end
+						tmpCard.createButton(buttonParam)
+					end
+				else
+					printToColor("ERROR: All cards must be in your hand to use this button.", playerColor, "Red")
+				end
+			end
+		elseif playerColor == getChan() then
+
+			if bolPresClicked then
+				if countHand(playerColor, true) == 2 then
+					for j, card in ipairs(cardsLastDrawn) do
+						tmpCard = getObjectFromGUID(card)
+						if tmpCard then tmpCard.clearButtons() end
+					end
+
+					for i, obj in pairs(cardsPassed) do
+						if obj == clickedObject then
+                            buttonParam.position = {0, 1, 0.3}
+							buttonParam.width = 900
+							buttonParam.height = 320
+							buttonParam.label = "Sure?"
+							buttonParam.color = {0.224, 1.0, 0.078, 1}
+							buttonParam.font_color = {1, 1, 1, 1}
+                            buttonParam.click_function = "discardButtonClicked"
+						else
+                            buttonParam.position = {0, 1, 0.3}
+							buttonParam.width = 900
+							buttonParam.height = 320
+							buttonParam.label = "Discard"
+							buttonParam.color = {0/255, 0/255, 0/255, 255/255}
+							buttonParam.font_color = {1, 1, 1, 1}
+                            buttonParam.click_function = "discardFirstClick"
+						end
+						obj.createButton(buttonParam)
+					end
+
+
+				else
+					printToColor("ERROR: All cards must be in your hand to use this button.", playerColor, "Red")
+				end
+			else
+				if countHand(playerColor, false) == 2 then
+					bolPresClicked = true
+					discardFirstClick(clickedObject, playerColor)
+					return false
+				end
+				printToColor("ERROR: All cards must be in your hand to use this button.", playerColor, "Red")
+			end
+
+		else
+			printToColor("ERROR: You are not in this play.", playerColor, "Red")
+		end
+	end
+end
+
+function discardButtonClicked(clickedObject, playerColor, altClick)
 
 
 
@@ -5544,14 +5635,14 @@ function discardButtonClicked(clickedObject, playerColor)
 						cardsPassed[i] = tmpCard
 					end
 				end
-
-				addGetDraws(cardsLastDrawn, cardsPassed)
+				bolPresClicked = true
+				addGetDraws(cardsPassed)
 
             else
                 printToColor("ERROR: All cards must be in your hand to use this button.", playerColor, "Red")
             end
         end
-        bolPresClicked = true
+        --bolPresClicked = true
 	elseif playerColor == getChan() then
 		if bolPresClicked then
             if countHand(playerColor, true) == 2 then
@@ -5572,7 +5663,7 @@ function discardButtonClicked(clickedObject, playerColor)
                     end
                 end
 				if not drawLog[#drawLog][6] then
-					addGetDraws(cardsLastDrawn, cardsPassed)
+					addGetDraws(cardsPassed)
 				end
              else
                 printToColor("ERROR: All cards must be in your hand to use this button.", playerColor, "Red")

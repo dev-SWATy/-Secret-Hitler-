@@ -293,7 +293,7 @@
             <Button
                 onClick="getOwnDraws"
                 color="#4682b4"
-                tooltip="Or type 'h'"
+                tooltip="Or type 'myd'"
                 tooltipPosition="Above"
                 tooltipBackgroundColor="rgba(0,0,0,1)"
             >
