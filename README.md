@@ -1,4 +1,4 @@
-# ◉ Secret Hitler: Circle of Secrets ◉
+# ◉ Secret Hitler ◉
 
 ![](https://github.com/dev-SWATy/-Secret-Hitler-Circle-of-Secrets-/blob/main/assets/secrethitler.gif?raw=true)
 
@@ -16,7 +16,7 @@ Learn more about the original game on the [official Secret Hitler website](https
 
 ## Workshop and Subscription
 
-Interested in playing "◉ Secret Hitler: Circle of Secrets ◉"? Check out the workshop and subscribe to stay updated with the latest enhancements: [Subscribe on Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3142735640).
+Interested in playing "◉ Secret Hitler ◉"? Check out the workshop and subscribe to stay updated with the latest enhancements: [Subscribe on Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3142735640).
 
 ## Acknowledgments
 
