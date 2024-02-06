@@ -2048,6 +2048,11 @@ voteNotebook = ''
 -- Called when a game finishes loading
 function onLoad(saveString)
 
+	getObjectFromGUID("6d5247").interactable = false
+	getObjectFromGUID("aa23ae").interactable = false
+	getObjectFromGUID("15583c").interactable = false
+	getObjectFromGUID("4aeb2b").interactable = false
+
 	--Set clocks to uninteractable
 	getObjectFromGUID("303db7").interactable = false
 	getObjectFromGUID("68faa0").interactable = false
@@ -2706,7 +2711,7 @@ function onChat(messageIn, player)
   elseif messageTable[1] == '!tylertest' then
 		--Nothing
 		return false
-  elseif (messageTable[1] == 'getmydraws' or messageTable[1] == 'myd') and player.color ~= "Grey" then
+  elseif (messageTable[1] == 'getmydraws' or messageTable[1] == 'myd') and player.color ~= "Grey" and player.color ~= "Black" then
 		getOwnDraws(player)
 		--Nothing
 		return false
@@ -3926,6 +3931,7 @@ function boardCardHandler(card)
 				notateInfo(powerHolder, 'inspects', '', '', true)
 			end
 		elseif isBoardCardPickPres(card) then
+			getObjectFromGUID(PRESIDENT_GUID).setVar("powerSE", true)
 			if options.autoNotate then
 				notateInfo(powerHolder, 'gives pres to', '', '', true)
 			end
@@ -5441,7 +5447,7 @@ function createCardButton()
 		click_function = "discardFirstClick",
 		label = "Discard",
 		font_size = 270,
-		font_color = {1, 1, 1, 1},
+		font_color = {255/255, 128/255, 0/255, 255/255},
 		color = {0/255, 0/255, 0/255, 255/255},
 		function_owner = nil,
 	}
@@ -5556,7 +5562,7 @@ function discardFirstClick(clickedObject, playerColor, altClick)
 							buttonParam.height = 320
 							buttonParam.label = "Discard"
 							buttonParam.color = {0/255, 0/255, 0/255, 255/255}
-							buttonParam.font_color = {1, 1, 1, 1}
+							buttonParam.font_color = {255/255, 128/255, 0/255, 255/255}
 							buttonParam.click_function = "discardFirstClick"
 						end
 						tmpCard.createButton(buttonParam)
@@ -5589,7 +5595,7 @@ function discardFirstClick(clickedObject, playerColor, altClick)
 							buttonParam.height = 320
 							buttonParam.label = "Discard"
 							buttonParam.color = {0/255, 0/255, 0/255, 255/255}
-							buttonParam.font_color = {1, 1, 1, 1}
+							buttonParam.font_color = {255/255, 128/255, 0/255, 255/255}
                             buttonParam.click_function = "discardFirstClick"
 						end
 						obj.createButton(buttonParam)
@@ -7070,6 +7076,9 @@ function notateColor2ByObject(tableIn)
 						refreshNotes(nil)
 						notate.line = nil
 						notate.action = ''
+						if getObjectFromGUID(PRESIDENT_GUID).getVar("powerSE") == true then
+							getObjectFromGUID(PRESIDENT_GUID).setVar("powerSE", false)
+						end
 					end
 				end
 			end
