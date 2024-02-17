@@ -1707,27 +1707,26 @@ function getOwnDraws(player)
 
 end
 
-function VoteHistoryUI(player)
-
-	if options.voteHistory then
-		player:print(string.gsub(voteNotebook, '\n$', ''))
-	else
-		player:print('[FF0000]ERROR: Full vote history is not enabled.[-]')
-	end
-
-end
-
 function printDraws(player, messageTable) -- left on top
 	local publicPrint = true
     local printString = ""
-	if player ~= "auto" then printString = player.steam_name..' got card draws:\n'
+    
+    if player ~= "auto" then 
+        if bolStarted and messageTable[2] ~= "z" then
+            player.broadcast("Are you sure you want to get draws mid-game ? If so, type \"GetDraws Z\"","Red")
+            return
+        end
 
-    end
+		if player ~= "auto" then printString = player.steam_name..' got card draws:\n'
 
-	if (player.color == "Black" and messageTable[2] ~= "p") then
-		publicPrint = false
-		printString = printString.."privately gotten by black:\n"
+		end
+
+		if (player.color == "Black" and messageTable[2] ~= "p") then
+			publicPrint = false
+			printString = printString.."privately gotten by black:\n"
+		end
 	end
+
 
 	for i, drawArr in ipairs(drawLog) do
 		printString = printString..i.." - "..text[drawArr[1]]..drawArr[1].."[-] > "..text[drawArr[2]]..drawArr[2].."[-]: "
@@ -2047,7 +2046,9 @@ voteNotebook = ''
 
 -- Called when a game finishes loading
 function onLoad(saveString)
+	--print(saveString)
 
+	--Set Banners to uninteractable
 	getObjectFromGUID("6d5247").interactable = false
 	getObjectFromGUID("aa23ae").interactable = false
 	getObjectFromGUID("15583c").interactable = false
@@ -2088,7 +2089,7 @@ function onLoad(saveString)
 
 
 
-	if not (saveString == '') then
+--[[ 	if not (saveString == '') then
 		local save = JSON.decode(saveString)
 
 		local pastVersion = save['version']
@@ -2137,7 +2138,7 @@ function onLoad(saveString)
 			maxAddsNT = save['ntma']
 			newAddTimeNT = save['ntat']
 		end
-	end
+	end --]]
 
 	alwaysInit()
 	if not started then
@@ -2167,6 +2168,133 @@ function onLoad(saveString)
 			lastVoteObj.setScale({5.00, 5.00, 5.00})
 		end
 	end
+
+	if saveString and saveString ~= "" then
+		
+		--Reload old table
+		--reloadTable(saveString)
+	end
+
+end
+
+function reloadTable(saveString)
+	
+	--If not bolstarted, then do nothing
+	print("Reloading Game")
+	local save = JSON.decode(saveString)
+
+	bolStarted = save['bolStarted']
+	started = bolStarted
+
+	--Reload Notes
+	noteTakerNotes = save['ntn']
+	refreshNotes()
+
+	--Set Player Status
+	playerStatus = save['playerStatus']
+	refreshStatusButtons()
+	
+	--Assign Roles and do UI
+	roles = save['rolesTable']
+	refreshUI()
+
+	--Reload Getdraws
+	drawLog = save['drawsTable']
+
+	--Reset Timers
+
+	--Reset Vote History
+	voteNotebook = save['voteHistory']
+
+	--Assign player Status and create status buttons
+	playerStatus = save['playerStatus']
+	refreshStatusButtons()
+
+	--Bullet Table
+	bulletVictims = save['bulletTable']
+
+	--Recreate Vote Cards
+	recreateVotes("setup","setup","setup")
+
+	--Get Rules + text boxes + options board
+	options = save.options
+	settingsPannelMakeButtons()
+	makeRulesTextBox()
+
+	--Set Start Time
+	timeSinceStart = save.startTime
+
+	--unlock Placards
+	getObjectFromGUID(PRESIDENT_GUID).interactable = true
+	getObjectFromGUID(CHANCELOR_GUID).interactable = true
+	
+end
+
+function onSave()
+	
+	--print("Saving")
+
+	local save = {}
+	
+	save['version'] = UPDATE_VERSION
+
+--[[ 	save['a'] = activePowerColor
+	save['b'] = bannerGuids
+	save['bi'] = bulletInfo
+	save['f'] = fascists
+	save['fp'] = forcePres
+	save['gag'] = greyAvatarGuids
+	save['gp'] = greyPlayerSteamIds
+	save['gphg'] = greyPlayerHandGuids
+	save['h'] = hitler
+	save['ii'] = imprisonInfo
+	save['in'] = inspected
+	save['ja'] = jaCardGuids
+	save['lfp'] = lastFascistPlayed
+	save['llp'] = lastLiberalPlayed
+	save['lc'] = lastChan
+	save['lp'] = lastPres
+	save['lv'] = lastVote
+	save['mn'] = mainNotes
+	save['nein'] = neinCardGuids
+	save['note'] = notate
+	save['ntn'] = noteTakerNotes
+	save['ntcl'] = noteTakerCurrLine
+	save['o'] = options
+	save['p'] = players
+	save['prcg'] = playerRoleCardGuids
+	save['ps'] = playerStatus
+	save['psbg'] = playerStatusButtonGuids
+	save['r'] = roles
+	save['s'] = started
+	save['vn'] = voteNotes
+	save['vnb'] = voteNotebook
+	save['bt'] = btMode
+	save['svt'] = stopVoteTouching
+	save['recd'] = recordDownvotes
+	save['btd'] = bulletsToDelete
+	save['drawLog'] = drawLog
+	--timer values
+	save['st'] = spawnTimer
+	save['ntft'] = freeTalkTimeNT
+	save['ntpa'] = presOnlyTNT
+	save['ntma'] = maxAddsNT
+	save['ntat'] = newAddTimeNT --]]
+
+	save['bolStarted'] = bolStarted
+	save['rolesTable'] = roles
+	save['drawsTable'] = drawLog
+	save['bulletTable'] = bulletVictims
+	save['options'] = options
+	save['startTime'] = timeSinceStart
+	save['playerStatus'] = playerStatus
+	save['ntn'] = noteTakerNotes
+	save['voteHistory'] = voteNotebook
+
+
+	local saveString = JSON.encode(save)
+	
+	return saveString
 end
 
 function createRoleZones()
@@ -2296,57 +2424,7 @@ function lockNeededCards()
 	end
 end
 
-function onSave()
-	local save = {}
 
-	save['version'] = UPDATE_VERSION
-
-	save['a'] = activePowerColor
-	save['b'] = bannerGuids
-	save['bi'] = bulletInfo
-	save['f'] = fascists
-	save['fp'] = forcePres
-	save['gag'] = greyAvatarGuids
-	save['gp'] = greyPlayerSteamIds
-	save['gphg'] = greyPlayerHandGuids
-	save['h'] = hitler
-	save['ii'] = imprisonInfo
-	save['in'] = inspected
-	save['ja'] = jaCardGuids
-	save['lfp'] = lastFascistPlayed
-	save['llp'] = lastLiberalPlayed
-	save['lc'] = lastChan
-	save['lp'] = lastPres
-	save['lv'] = lastVote
-	save['mn'] = mainNotes
-	save['nein'] = neinCardGuids
-	save['note'] = notate
-	save['ntn'] = noteTakerNotes
-	save['ntcl'] = noteTakerCurrLine
-	save['o'] = options
-	save['p'] = players
-	save['prcg'] = playerRoleCardGuids
-	save['ps'] = playerStatus
-	save['psbg'] = playerStatusButtonGuids
-	save['r'] = roles
-	save['s'] = started
-	save['vn'] = voteNotes
-	save['vnb'] = voteNotebook
-	save['bt'] = btMode
-	save['svt'] = stopVoteTouching
-	save['recd'] = recordDownvotes
-	save['btd'] = bulletsToDelete
-	save['drawLog'] = drawLog
-	--timer values
-	save['st'] = spawnTimer
-	save['ntft'] = freeTalkTimeNT
-	save['ntpa'] = presOnlyTNT
-	save['ntma'] = maxAddsNT
-	save['ntat'] = newAddTimeNT
-	local saveString = JSON.encode(save)
-
-	return saveString
-end
 
 function refreshHiddenZones()
 	for i, player in pairs(MAIN_PLAYABLE_COLORS) do
@@ -3815,7 +3893,7 @@ function displayBannerCardsCoroutine()
     topdeckProtection = false
 	-- Win check
 	if lastLiberalPlayed > 5 or lastFascistPlayed > 6 then
-		if not options.dealRoleCards then giveRoleCards() end
+		--if not options.dealRoleCards then giveRoleCards() end
 
 
 
@@ -4186,6 +4264,14 @@ function markDead(tableIn)
 					refreshStatusButtons()
 				end
 			end
+
+            if victimColor == getPres() then
+                tmpNewPres = nextPres(victimColor)
+                if playerStatus[tmpNewPres] == 5 or playerStatus[tmpNewPres] == 6 then
+                    tmpNewPres = nextPres(tmpNewPres)
+                end
+                movePlacards(tmpNewPres, false)
+            end
 		end
 	end
 end
@@ -4226,14 +4312,16 @@ function endGame(winCon, winLine)
 
     printToAll(finalPrint .. winColor .. winLine .. timeLine)
 
-    giveRoleCards()
-    printToAll(txtAllRoles)
-    if options.autoGetDraws then printDraws("auto", messageTable) end
+
 
     bolStarted = false
     bolTDShuffle = false
 
-	for k in pairs(bulletVictims) do
+    giveRoleCards()
+    printToAll(txtAllRoles)
+    if options.autoGetDraws then printDraws("auto", messageTable) end
+
+    	for k in pairs(bulletVictims) do
 		bulletVictims[k] = nil
 	end
 

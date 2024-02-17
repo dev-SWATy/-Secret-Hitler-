@@ -192,7 +192,7 @@
         rectAlignment="UpperCenter"
         offsetXY= "0 -2"
         height="15%"
-        width="90%"
+        width="25%"
         color="rgba(0,0,0,0)"
         allowDragging="false"
         active="false"
@@ -219,12 +219,12 @@
             width="100%"
             color="rgba(1,1,1,1)"
             textColor="#39ff14"
-            fontStyle="Bold"
+            fontStyle="Normal"
             fontSize="20"
             rectAlignment="UpperCenter"
             offsetXY= "0 -2"
         >
-            <textcolor color="rgba(1,1,1,1)">Enigma Engine </textcolor>
+            <textcolor color="#39ff14">♕ </textcolor>
             <textcolor color="#FF0000">✗</textcolor>
         </Text>
 
